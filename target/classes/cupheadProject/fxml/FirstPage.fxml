@@ -6,8 +6,12 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="cupheadProject.firstPageController" >
+
+<BorderPane prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/16"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="cupheadProject.FirstPageController"
+            stylesheets="@../css/style.css" >
 
     <center>
 
@@ -16,11 +20,12 @@
             <Label text="Username"/>
             <TextField fx:id="username" promptText="enter your username" />
             <Label text="Password"/>
-            <TextField fx:id="password" promptText="enter your password" onKeyTyped="#type"/>
-            <Button fx:id="registerButton" styleClass="primary-btn" text="Login"/>
+            <TextField fx:id="password" promptText="enter your password" onKeyTyped="#typePassword"/>
+            <Button fx:id="loginButton" styleClass="primary-btn" text="Login" onMouseClicked="#login"/>
             <Button styleClass="secondary-btn" text="Register" onMouseClicked="#register"/>
-<!--            <Button text="skip" onMouseClicked="#skip"/>-->
+            <Button text="skip" onMouseClicked="#skip"/>
         </VBox>
 
     </center>
+
 </BorderPane>

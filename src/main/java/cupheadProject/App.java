@@ -19,8 +19,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        //URL address_login_page = new URL(App.class.getResource("fxml/loginPage.fxml").toString());
-        Pane pane = FXMLLoader.load(App.class.getResource("fxml/loginPage.fxml"));
+        //URL address_login_page = new URL(App.class.getResource("fxml/FirstPage.fxml").toString());
+        Pane pane = FXMLLoader.load(App.class.getResource("fxml/FirstPage.fxml"));
         Scene scene = new Scene(pane);
         stage.setScene(scene);
         stage.show();
