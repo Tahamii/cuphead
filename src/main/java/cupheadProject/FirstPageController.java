@@ -12,18 +12,23 @@ import javafx.fxml.FXML;
 
 public class FirstPageController {
 
-    User loggedInUser = null;
+    String loggedInUsername = null;
 
     public Button loginButton;
+    public Button registerButton;
     @FXML
     private TextField password;
     @FXML
     private TextField username;
 
+
     public void register(MouseEvent mouseEvent) {
         System.out.println("+++" + username.getText());
         if(!RegisterMenuController.getInstance().handleRegister(username.getText(), password.getText())){
             showErrorMessage("this username is not available");
+        }
+        else{
+            switchToGame();
         }
     }
 
@@ -31,9 +36,11 @@ public class FirstPageController {
         if(!LoginMenuController.getInstance().handleLogin(username.getText(), password.getText())){
             showErrorMessage("username or password is wrong");
         }
+        else{
+            loggedInUsername = username.getText();
+            switchToGame();
+        }
     }
-
-
 
     public static void showErrorMessage(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -50,15 +57,25 @@ public class FirstPageController {
         if (strength < 9) {
             password.setStyle("-fx-border-color: #ff0066;");
             loginButton.setDisable(true);
+            registerButton.setDisable(true);
         } else {
             password.setStyle("-fx-border-width: 0");
             loginButton.setDisable(false);
+            registerButton.setDisable(false);
         }
 
     }
 
     public void skip(MouseEvent mouseEvent) {
-        System.out.println("kdjkwlejfl");
+        switchToGame();
+    }
+
+    private void switchToGame() {
+        try {
+            App.setRoot("GamePage");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

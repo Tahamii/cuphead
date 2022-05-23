@@ -22,7 +22,7 @@
             <Label text="Password"/>
             <TextField fx:id="password" promptText="enter your password" onKeyTyped="#typePassword"/>
             <Button fx:id="loginButton" styleClass="primary-btn" text="Login" onMouseClicked="#login"/>
-            <Button styleClass="secondary-btn" text="Register" onMouseClicked="#register"/>
+            <Button fx:id="registerButton" styleClass="secondary-btn" text="Register" onMouseClicked="#register"/>
             <Button text="skip" onMouseClicked="#skip"/>
         </VBox>
 
