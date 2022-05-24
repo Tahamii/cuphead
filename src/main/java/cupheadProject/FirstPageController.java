@@ -1,18 +1,17 @@
 package cupheadProject;
 
-import cupheadProject.Controller.LoginMenuController;
-import cupheadProject.Controller.RegisterMenuController;
-import cupheadProject.Model.User;
-import javafx.scene.control.Alert;
+import cupheadProject.Controller.UserController;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.fxml.FXML;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
-public class FirstPageController {
+public class FirstPageController extends Menu {
 
-    String loggedInUsername = null;
 
     public Button loginButton;
     public Button registerButton;
@@ -21,34 +20,28 @@ public class FirstPageController {
     @FXML
     private TextField username;
 
+    private AnchorPane mainPane;
+    private Scene mainScene;
+    private Stage mainStage;
+
 
     public void register(MouseEvent mouseEvent) {
         System.out.println("+++" + username.getText());
-        if(!RegisterMenuController.getInstance().handleRegister(username.getText(), password.getText())){
+        if(!UserController.getInstance().handleRegister(username.getText(), password.getText())){
             showErrorMessage("this username is not available");
-        }
-        else{
-            switchToGame();
         }
     }
 
     public void login(MouseEvent mouseEvent){
-        if(!LoginMenuController.getInstance().handleLogin(username.getText(), password.getText())){
+        if(!UserController.getInstance().handleLogin(username.getText(), password.getText())){
             showErrorMessage("username or password is wrong");
         }
         else{
-            loggedInUsername = username.getText();
-            switchToGame();
+            this.switchToPage("ProfileMenu");
         }
     }
 
-    public static void showErrorMessage(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("DevLaunch Dialog");
-        alert.setHeaderText("An error has been encountered");
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
+
 
 
     public void typePassword(KeyEvent keyEvent) {
@@ -67,15 +60,19 @@ public class FirstPageController {
     }
 
     public void skip(MouseEvent mouseEvent) {
-        switchToGame();
+//        switchToGame();
+        mainPane = new AnchorPane();
+        mainScene = new Scene(mainPane, 100, 100 );
+        mainStage = new Stage();
+        mainStage.setScene(mainScene);
+        App.setMainStage(mainStage);
     }
 
-    private void switchToGame() {
-        try {
-            App.setRoot("GamePage");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
+
+//    private void createBackGround(){
+//        Image backgroundImage = new Image("sf");
+//        BackgroundImage background = new
+//    }
 
 }

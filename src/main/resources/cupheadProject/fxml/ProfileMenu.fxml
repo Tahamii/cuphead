@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Text?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="cupheadProject.ProfileMenuController"
+            prefHeight="400.0" prefWidth="600.0"
+            stylesheets="@../css/style.css">
+
+    <center>
+
+        <VBox spacing="10" alignment="CENTER" maxWidth="350">
+            <Text id="title" text="Profile menu" />
+            <Button text="choose avatar and start the game" styleClass="secondary-btn" onMouseClicked="#chooseAvatar"/>
+            <Button text="change username or password" styleClass="secondary-btn" onMouseClicked="#changeUser"/>
+            <Button text="delete account" styleClass="secondary-btn" onMouseClicked="#deleteAccount"/>
+            <Button text="logout" styleClass="secondary-btn" onMouseClicked="#logout"/>
+        </VBox>
+
+    </center>
+
+</BorderPane>

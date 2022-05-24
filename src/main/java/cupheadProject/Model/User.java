@@ -32,11 +32,38 @@ public class User {
         return null;
     }
 
+    public static void updateInfo(String username, String newUsername, String password) {
+        for (User user : USERS) {
+            if(user.username.equals(username)){
+                user.setUsername(newUsername);
+                user.setPassword(password);
+                return;
+            }
+        }
+    }
+
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public static void deleteUser(String username){
+        for (User user : USERS) {
+            if(user.username.equals(username)){
+                USERS.remove(user);
+                return;
+            }
+        }
     }
 }
