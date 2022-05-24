@@ -2,6 +2,8 @@ module cupheadProject {
     requires javafx.controls;
     requires javafx.fxml;
 
-    opens cupheadProject to javafx.fxml;
     exports cupheadProject;
+    opens cupheadProject to javafx.fxml;
+    exports cupheadProject.View;
+    opens cupheadProject.View to javafx.fxml;
 }

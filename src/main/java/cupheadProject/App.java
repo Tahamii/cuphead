@@ -1,5 +1,6 @@
 package cupheadProject;
 
+import cupheadProject.View.GamePageController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -27,7 +28,7 @@ public class App extends Application {
         stage.show();
     }
 
-    static void setRoot(String fxml) throws Exception {
+    public static void setRoot(String fxml) throws Exception {
         scene.setRoot(loadFXML(fxml));
     }
 
@@ -41,8 +42,14 @@ public class App extends Application {
     }
 
     public static void setMainStage(Stage mainStage) {
-        App.mainStage.hide();
-        mainStage.show();
+//        App.mainStage.hide();
+        GamePageController gamePageController = new GamePageController();
+        gamePageController.createGame(App.mainStage);
+    }
+
+    public static void setScene(Scene scene) {
+        App.scene = scene;
+        mainStage.setScene(scene);
     }
 
     public static void main(String[] args) {

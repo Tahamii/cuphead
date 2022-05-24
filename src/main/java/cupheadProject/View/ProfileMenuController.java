@@ -1,4 +1,4 @@
-package cupheadProject;
+package cupheadProject.View;
 
 import cupheadProject.Controller.UserController;
 import javafx.fxml.FXML;

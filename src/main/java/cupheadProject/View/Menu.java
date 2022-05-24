@@ -1,6 +1,6 @@
-package cupheadProject;
+package cupheadProject.View;
 
-import cupheadProject.Model.User;
+import cupheadProject.App;
 import javafx.scene.control.Alert;
 
 public class Menu {

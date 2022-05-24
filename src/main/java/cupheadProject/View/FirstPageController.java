@@ -1,5 +1,6 @@
-package cupheadProject;
+package cupheadProject.View;
 
+import cupheadProject.App;
 import cupheadProject.Controller.UserController;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -61,11 +62,13 @@ public class FirstPageController extends Menu {
 
     public void skip(MouseEvent mouseEvent) {
 //        switchToGame();
-        mainPane = new AnchorPane();
-        mainScene = new Scene(mainPane, 100, 100 );
-        mainStage = new Stage();
-        mainStage.setScene(mainScene);
-        App.setMainStage(mainStage);
+//        mainPane = new AnchorPane();
+//        mainScene = new Scene(mainPane, 100, 100 );
+//        mainStage = new Stage();
+//        mainStage.setScene(mainScene);
+//        App.setMainStage(mainStage);
+        ChooseAvatar chooseAvatar = new ChooseAvatar();
+        App.setScene(chooseAvatar.getAvatarScene());
     }
 
 
