@@ -61,12 +61,6 @@ public class FirstPageController extends Menu {
     }
 
     public void skip(MouseEvent mouseEvent) {
-//        switchToGame();
-//        mainPane = new AnchorPane();
-//        mainScene = new Scene(mainPane, 100, 100 );
-//        mainStage = new Stage();
-//        mainStage.setScene(mainScene);
-//        App.setMainStage(mainStage);
         ChooseAvatar chooseAvatar = new ChooseAvatar();
         App.setScene(chooseAvatar.getAvatarScene());
     }

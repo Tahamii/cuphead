@@ -1,5 +1,6 @@
 package cupheadProject.View;
 
+import cupheadProject.App;
 import cupheadProject.Controller.UserController;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -36,6 +37,7 @@ public class ProfileMenuController extends Menu {
     }
 
     public void chooseAvatar(MouseEvent mouseEvent) {
-        switchToPage("ChooseAvatar");
+        ChooseAvatar chooseAvatar = new ChooseAvatar();
+        App.setScene(chooseAvatar.getAvatarScene());
     }
 }

@@ -1,6 +1,7 @@
 package cupheadProject;
 
-import cupheadProject.View.GamePageController;
+import cupheadProject.Enums.AvatarAddress;
+import cupheadProject.View.Game;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -41,10 +42,10 @@ public class App extends Application {
         return mainStage;
     }
 
-    public static void setMainStage(Stage mainStage) {
+    public static void setMainStage(Stage mainStage, AvatarAddress avatar) {
 //        App.mainStage.hide();
-        GamePageController gamePageController = new GamePageController();
-        gamePageController.createGame(App.mainStage);
+        Game gamePageController = new Game();
+        gamePageController.createGame(App.mainStage, avatar);
     }
 
     public static void setScene(Scene scene) {

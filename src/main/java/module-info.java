@@ -6,4 +6,6 @@ module cupheadProject {
     opens cupheadProject to javafx.fxml;
     exports cupheadProject.View;
     opens cupheadProject.View to javafx.fxml;
+    exports cupheadProject.Enums;
+    opens cupheadProject.Enums to javafx.fxml;
 }
