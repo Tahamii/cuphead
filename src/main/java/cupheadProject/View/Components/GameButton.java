@@ -3,41 +3,54 @@ package cupheadProject.View.Components;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Font;
+import javafx.scene.layout.*;
 
 public class GameButton extends Button{
 //    private final String FONT_PATH = "/resources/kenvector_future.ttf";
-    private final String BUTTON_PRESSED_STYLE = "-fx-background-color: transparent; -fx-background-image: url('/cupheadProject/png/pressed_button.png');";
-    private final String BUTTON_FREE_STYLE = "-fx-background-color: transparent; -fx-background-image: url('/cupheadProject/png/button.png');";
+    private final String BUTTON_PRESSED = "/cupheadProject/png/pressed_button.png";
+    private final String BUTTON_FREE = "/cupheadProject/png/button.png";
+    private Background pressedBackground;
+    private Background freeBackground;
 
     public GameButton(String text) {
         setText(text);
-//        setButtonFont();
         setPrefWidth(190);
         setPrefHeight(49);
-        setStyle(BUTTON_FREE_STYLE);
+        createBackgrounds();
+        this.setBackground(freeBackground);
         initializeButtonListeners();
     }
 
-//    private void setButtonFont() {
+    private void createBackgrounds() {
+        BackgroundImage backgroundImage = new BackgroundImage( new Image( getClass().getResource(BUTTON_FREE).toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        freeBackground = new Background(backgroundImage);
+        BackgroundImage backgroundImage2 = new BackgroundImage( new Image( getClass().getResource(BUTTON_PRESSED).toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        pressedBackground = new Background(backgroundImage2);
+    }
+
+    //    private void setButtonFont() {
 //
 //        setFont(Font.loadFont(getClass().getResourceAsStream(FONT_PATH), 23));
 //
 //    }
 
     private void setButtonPressedStyle() {
-        setStyle(BUTTON_PRESSED_STYLE);
+        setBackground(pressedBackground);
+//        System.out.println("pressed");
+//        System.out.println(this.getBackground());
         setPrefHeight(45);
         setLayoutY(getLayoutY() + 4);
     }
 
     private void setButtonReleasedStyle() {
-        setStyle(BUTTON_FREE_STYLE);
-        setPrefHeight(45);
+        setBackground(freeBackground);
+//        System.out.println("released");
+//        System.out.println(this.getBackground());
+        setPrefHeight(49);
         setLayoutY(getLayoutY() - 4);
-
     }
 
     private void initializeButtonListeners() {

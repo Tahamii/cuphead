@@ -4,12 +4,11 @@ import cupheadProject.Enums.AvatarAddress;
 import cupheadProject.Enums.Images;
 import cupheadProject.Transition.BulletAnimation;
 import cupheadProject.Transition.MiniBossAnimation;
-import cupheadProject.View.Components.Bullet;
-import cupheadProject.View.Components.MiniBosses;
-import cupheadProject.View.Components.PeriodicTask;
+import cupheadProject.View.Components.*;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -27,7 +26,7 @@ public class Game {
     private Stage mainStage;
     private AnimationTimer gameTimer;
 
-    private ImageView avatar;
+    private Avatar avatar;
 
     Random randomPositionGenerator;
 
@@ -107,17 +106,21 @@ public class Game {
         gameStage.setScene(gameScene);
     }
 
-    public void createGame(Stage mainStage, AvatarAddress avatar) {
+    public void createGame(Stage mainStage) {
         this.mainStage = mainStage;
         this.mainStage.hide();
 //        createBackground();
-        createAvatar(avatar);
+        createAvatar();
         createGameElements();
         createGameLoop();
         gameStage.show();
     }
 
     private void createGameElements(){
+//        Button b = new GameButton("test");
+//        b.setLayoutX(50);
+//        b.setLayoutY(50);
+//        gamePane.getChildren().add(b);
 //        miniBosses = new ImageView[3];
 //        for (int i = 0; i < miniBosses.length; i++) {
 //            miniBosses[i] = new ImageView(new Image(getClass().getResource(Images.MINIBOSS.getUrl()).toExternalForm()));
@@ -128,8 +131,9 @@ public class Game {
         PeriodicTask miniBossLoop = new PeriodicTask(15) {
             @Override
             public void run() {
+                int y = randomPositionGenerator.nextInt(GAME_HEIGHT - 70);
                 for (int i = 0; i < 3; i++) {
-                    MiniBosses miniBosses = new MiniBosses(900 - 200 * i, 50);
+                    MiniBosses miniBosses = new MiniBosses(900 - 100 * i, y);
                     gamePane.getChildren().add(miniBosses);
                 }
                 MiniBossAnimation miniBossAnimation = new MiniBossAnimation(MiniBosses.getMiniBosses(), gamePane);
@@ -142,7 +146,14 @@ public class Game {
             @Override
             public void run() {
                 if(isSpaseKeyPressed){
-                    Bullet bullet = new Bullet(avatar.getLayoutX(), avatar.getLayoutY());
+                    String musicFile = "StayTheNight.mp3";     // For example
+
+//                    Media sound = new Media(new File(musicFile).toURI().toString());
+//                    MediaPlayer mediaPlayer = new MediaPlayer(sound);
+//                    mediaPlayer.play();
+
+                    Bullet bullet = new Bullet(avatar.getX() + avatar.getWidth()/2,
+                            avatar.getY() + avatar.getHeight() / 2);
                     gamePane.getChildren().add(bullet);
                     BulletAnimation animation = new BulletAnimation(Bullet.getBullets(), bullet, gamePane);
                     animation.play();
@@ -155,18 +166,13 @@ public class Game {
         };
     }
 
-    private void createAvatar(AvatarAddress choosenAvatar){
-        this.avatar = new ImageView(new Image(getClass().getResource(choosenAvatar.getUrl()).toExternalForm()));
-        this.avatar.setLayoutX(10);
-        this.avatar.setLayoutY(GAME_HEIGHT/2 - 50);
-        avatar.setFitWidth(109);
-        avatar.setFitHeight(95);
-        gamePane.getChildren().add(avatar);
+    private void createAvatar(){
+        avatar = Avatar.getInstance();
+        gamePane.getChildren().add(Avatar.getInstance());
     }
 
     private void createGameLoop() {
         gameTimer = new AnimationTimer() {
-
             @Override
             public void handle(long now) {
 //                moveBackground();
@@ -174,7 +180,6 @@ public class Game {
 //                checkIfElementsCollide();
 
                 moveAvatar();
-
             }
         };
         gameTimer.start();
@@ -183,25 +188,25 @@ public class Game {
     private void moveAvatar() {
 
         if(isDownkeyPressed) {
-            if(avatar.getLayoutY() < GAME_HEIGHT - avatar.getFitHeight())
-                avatar.setLayoutY(avatar.getLayoutY() + 10);
+            if(avatar.getY() < GAME_HEIGHT - avatar.getHeight())
+                avatar.setY(avatar.getY() + 10);
         }
 
         if(isUpKeyPressed){
-            if(avatar.getLayoutY() > 0){
-                avatar.setLayoutY(avatar.getLayoutY() - 10);
+            if(avatar.getY() > 0){
+                avatar.setY(avatar.getY() - 10);
             }
         }
 
         if(isRightKeyPressed){
-            if(avatar.getLayoutX() < GAME_WIDTH - avatar.getFitWidth()) {
-                avatar.setLayoutX(avatar.getLayoutX() + 10);
+            if(avatar.getX() < GAME_WIDTH - avatar.getWidth()) {
+                avatar.setX(avatar.getX() + 10);
             }
         }
 
         if(isLeftKeyPressed){
-            if(avatar.getLayoutX() > 0){
-                avatar.setLayoutX(avatar.getLayoutX() - 10);
+            if(avatar.getX() > 0){
+                avatar.setX(avatar.getX() - 10);
             }
         }
 

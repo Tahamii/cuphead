@@ -1,7 +1,7 @@
 package cupheadProject.Enums;
 
 public enum Images {
-    MINIBOSS("/cupheadProject/png/miniBoss.png"),
+    MINIBOSS("/cupheadProject/png/miniBosses/0.png"),
     CHECK("/cupheadProject/png/checkmark.png"),
     CROSS("/cupheadProject/png/cross.png"),
     BUTTOM("/cupheadProject/png/button.png"),

@@ -13,9 +13,9 @@ public class MiniBosses extends Rectangle {
     private int life;
 
     public MiniBosses(double x, double y){
-        super(x, y, 158, 109);
+        super(x, y, 105, 73);
         this.life = 2;
-        this.fill();
+        this.fill(Images.MINIBOSS.getUrl());
         miniBosses.add(this);
     }
 
@@ -23,20 +23,28 @@ public class MiniBosses extends Rectangle {
         miniBosses.remove(miniBoss);
     }
 
-    private void fill(){
-        this.setFill(new ImagePattern(new Image(getClass().getResource(Images.MINIBOSS.getUrl()).toExternalForm())));
+    public void fill(String url){
+        this.setFill(new ImagePattern(new Image(getClass().getResource(url).toExternalForm())));
     }
 
     public static ArrayList<MiniBosses> getMiniBosses() {
         return miniBosses;
     }
 
-    public boolean hasCollision(ArrayList<Rectangle> blocks) {
+    public int getLife() {
+        return life;
+    }
+
+    public void setLife(int life) {
+        this.life = life;
+    }
+
+    public Rectangle hasCollision(ArrayList<Bullet> blocks) {
         for (Rectangle block : blocks) {
             if(block.getBoundsInParent().intersects(this.getLayoutBounds())){
-                return true;
+                return block;
             }
         }
-        return false;
+        return null;
     }
 }

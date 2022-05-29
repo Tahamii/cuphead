@@ -2,11 +2,13 @@ package cupheadProject.View;
 
 import cupheadProject.App;
 import cupheadProject.Enums.AvatarAddress;
+import cupheadProject.View.Components.Avatar;
 import cupheadProject.View.Components.AvatarTypeSetter;
 import cupheadProject.View.Components.GameButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -14,17 +16,19 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 
 public class ChooseAvatar {
-    private BorderPane avatarPane;
     private static Scene avatarScene;
-
+    private BorderPane avatarPane;
     private AvatarAddress choosenAvatar;
-    HBox hBox = new HBox();
 
     public ChooseAvatar() {
         avatarPane = new BorderPane();
@@ -43,19 +47,17 @@ public class ChooseAvatar {
 
         vBox.getChildren().add(title);
 
-
         vBox.getChildren().add(createAvatarsToChoose());
-
-//        Button button1 = new Button("start");
-        Button button2 = new Button("random avatar");
-//        button2.setStyle("-fx-background-image: url('/cupheadProject/png/pressed_button.png');");
-//        button2.setLayoutX(50);
-//        button2.setLayoutY(50);
+        vBox.getChildren().add(createRandomButton());
         vBox.getChildren().add(createStartButton());
-        vBox.getChildren().add(button2);
+        vBox.getChildren().add(createUploadButton());
 
         avatarPane.setCenter(vBox);
-//        avatarPane.getChildren().add(button2);
+    }
+
+
+    public Scene getAvatarScene() {
+        return avatarScene;
     }
 
     private HBox createAvatarsToChoose() {
@@ -88,17 +90,13 @@ public class ChooseAvatar {
         startButton.setLayoutX(350);
         startButton.setLayoutY(300);
 
-
         startButton.setOnAction(new EventHandler<ActionEvent>() {
-
 
             @Override
             public void handle(ActionEvent event) {
                 if (choosenAvatar != null) {
-                    System.out.println("started");
-                    Game gameManager = new Game();
-                    Stage stage = new Stage();
-                    App.setMainStage(stage, choosenAvatar);
+                    Avatar.getInstance().setBackground(choosenAvatar.getUrl());
+                    startGame();
                 }
 
             }
@@ -107,20 +105,59 @@ public class ChooseAvatar {
         return startButton;
     }
 
-    public Scene getAvatarScene() {
-        return avatarScene;
+    private GameButton createRandomButton() {
+        GameButton randomButton = new GameButton("random");
+        randomButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Random random = new Random();
+                int i = random.nextInt(AvatarAddress.values().length);
+                choosenAvatar = AvatarAddress.values()[i];
+                Avatar.getInstance().setBackground(choosenAvatar.getUrl());
+                startGame();
+            }
+        });
+        return randomButton;
     }
 
-    private void addImage(String url) {
-        Image image = new Image(getClass().getResource(url).toExternalForm());
-        ImageView view = new ImageView(image);
-        view.setFitWidth(140);
-        view.setFitHeight(120);
-        VBox vBox = new VBox();
-        vBox.getChildren().add(view);
-        Button button = new Button();
-        vBox.getChildren().add(button);
-        hBox.setAlignment(Pos.CENTER);
-        hBox.getChildren().add(vBox);
+    private GameButton createUploadButton() {
+        GameButton uploadButton = new GameButton("upload");
+        uploadButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("png Files", "*.png"));
+                File selectedFile = fileChooser.showOpenDialog(null);
+                if(selectedFile != null){
+                    Image image = new Image(selectedFile.toURI().toString());
+//                    ImageView view = new ImageView(image);
+                    Avatar.getInstance().setBackground(image);
+                    startGame();
+//                    avatarPane.getChildren().add(view);
+                }
+            }
+        });
+        return uploadButton;
     }
+
+    private void startGame() {
+        System.out.println("started");
+        Game gameManager = new Game();
+        Stage stage = new Stage();
+        App.setMainStage(stage);
+    }
+
+
+//    private void addImage(String url) {
+//        Image image = new Image(getClass().getResource(url).toExternalForm());
+//        ImageView view = new ImageView(image);
+//        view.setFitWidth(140);
+//        view.setFitHeight(120);
+//        VBox vBox = new VBox();
+//        vBox.getChildren().add(view);
+//        Button button = new Button();
+//        vBox.getChildren().add(button);
+//        hBox.setAlignment(Pos.CENTER);
+//        hBox.getChildren().add(vBox);
+//    }
 }

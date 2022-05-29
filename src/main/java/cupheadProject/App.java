@@ -42,10 +42,10 @@ public class App extends Application {
         return mainStage;
     }
 
-    public static void setMainStage(Stage mainStage, AvatarAddress avatar) {
+    public static void setMainStage(Stage mainStage) {
 //        App.mainStage.hide();
         Game gamePageController = new Game();
-        gamePageController.createGame(App.mainStage, avatar);
+        gamePageController.createGame(App.mainStage);
     }
 
     public static void setScene(Scene scene) {

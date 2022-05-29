@@ -24,7 +24,7 @@ public class Bullet extends Rectangle {
         return bullets;
     }
 
-    public void remove(Bullet bullet) {
+    public static void remove(Bullet bullet) {
         bullets.remove(bullet);
     }
 }

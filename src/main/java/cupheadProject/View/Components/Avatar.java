@@ -1,6 +1,7 @@
 package cupheadProject.View.Components;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
@@ -13,13 +14,21 @@ public class Avatar extends Rectangle {
         return instance;
     }
     private Avatar() {
-        super(275, 320, 50, 15);
+        super(10, 200, 109, 95);
 //        this.getStyleClass().add("board");
     }
 
     public void setBackground(String url) {
         this.setFill(new ImagePattern(new Image(getClass().getResource(url).toExternalForm())));
     }
+
+    public void setBackground(Image image){
+        this.setFill(new ImagePattern(image));
+    }
+
+//    public Image getBackground(){
+//        return (Image) this.getFill();
+//    }
 
     public void moveRight() {
         if (!hitRightWall())
