@@ -1,7 +1,6 @@
 package cupheadProject.Transition;
 
-import cupheadProject.View.Components.Bullet;
-import cupheadProject.View.Components.MiniBosses;
+import cupheadProject.View.Components.*;
 import javafx.animation.Transition;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
@@ -24,18 +23,28 @@ public class MiniBossAnimation extends Transition {
     protected void interpolate(double v) {
         int frame = (int) Math.floor(v * 3);
         for (int i = 0; i < miniBosses.size(); i++) {
-//            System.out.println(i); "/cupheadProject/png/miniBoss.png //"/cupheadProject/png/miniBosses/0.png"
             miniBosses.get(i).fill("/cupheadProject/png/miniBosses/" + frame + ".png");
 
             miniBosses.get(i).setX(miniBosses.get(i).getX() - 2);
 
             if(miniBosses.get(i).hasCollision(Bullet.getBullets()) != null){
-                miniBosses.get(i).setLife( miniBosses.get(i).getLife() - 1);
+                if(BulletIcon.isBullet())
+                    miniBosses.get(i).setLife( miniBosses.get(i).getLife() - 1);
+                else
+                    miniBosses.get(i).setLife( miniBosses.get(i).getLife() - 2);
                 pane.getChildren().remove(miniBosses.get(i).hasCollision(Bullet.getBullets()));
                 Bullet.remove((Bullet) miniBosses.get(i).hasCollision(Bullet.getBullets()));
             }
 
+            if(!Avatar.getInstance().isRocket() && miniBosses.get(i).hasCollision(Avatar.getInstance())){
+                miniBosses.get(i).setLife( miniBosses.get(i).getLife() - 2);
+            }
+
             if (miniBosses.get(i).getX() < -158 || miniBosses.get(i).getLife() <= 0) {
+                Boom boom = Boom.getInstance(Avatar.getInstance().getX(), Avatar.getInstance().getY());
+//                pane.getChildren().add(boom);
+                BoomAnimation animation = new BoomAnimation(pane, boom);
+                animation.play();
                 pane.getChildren().remove(miniBosses.get(i));
                 MiniBosses.remove(miniBosses.get(i));
             }

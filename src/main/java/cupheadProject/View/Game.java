@@ -2,9 +2,12 @@ package cupheadProject.View;
 
 import cupheadProject.Enums.AvatarAddress;
 import cupheadProject.Enums.Images;
+import cupheadProject.Enums.Sounds;
 import cupheadProject.Transition.BulletAnimation;
 import cupheadProject.Transition.MiniBossAnimation;
+import cupheadProject.Transition.RocketAnimation;
 import cupheadProject.View.Components.*;
+import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -14,9 +17,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.util.Random;
+
+import static javafx.scene.media.MediaPlayer.INDEFINITE;
 
 public class Game {
 
@@ -31,6 +41,8 @@ public class Game {
     Random randomPositionGenerator;
 
     PeriodicTask shoot;
+    MediaPlayer backgroundSoundPlayer;
+    MediaPlayer bulletSoundPlayer;
 
     private boolean isUpKeyPressed;
     private boolean isLeftKeyPressed;
@@ -45,7 +57,15 @@ public class Game {
     public Game() {
         initializeStage();
         createKeyListeners();
+        createMedia();
         randomPositionGenerator = new Random();
+    }
+
+    private void initializeStage() {
+        gamePane = new AnchorPane();
+        gameScene = new Scene(gamePane, GAME_WIDTH, GAME_HEIGHT);
+        gameStage = new Stage();
+        gameStage.setScene(gameScene);
     }
 
     private void createKeyListeners() {
@@ -70,6 +90,16 @@ public class Game {
                 else if (event.getCode() == KeyCode.SPACE){
                     shoot.start();
                     isSpaseKeyPressed = true;
+                }
+                else if(event.getCode() == KeyCode.TAB){
+                    BulletIcon.getInstance().switchIcon();
+                }
+                else if(event.getCode() == KeyCode.R){
+                    if(RocketTimer.getInstance().getWidth() == 100 && !Avatar.getInstance().isRocket()) {
+                        Avatar.getInstance().setRocket(true);
+                        RocketAnimation animation = new RocketAnimation(gamePane);
+                        animation.play();
+                    }
                 }
             }
         });
@@ -98,12 +128,13 @@ public class Game {
         });
     }
 
+    private void createMedia(){
+        Media backgroundSound = new Media(getClass().getResource(Sounds.GAME.getUrl()).toExternalForm());
+        backgroundSoundPlayer = new MediaPlayer(backgroundSound);
+        backgroundSoundPlayer.setCycleCount(INDEFINITE);
 
-    private void initializeStage() {
-        gamePane = new AnchorPane();
-        gameScene = new Scene(gamePane, GAME_WIDTH, GAME_HEIGHT);
-        gameStage = new Stage();
-        gameStage.setScene(gameScene);
+//        Media bulletSound = new Media(getClass().getResource(Sounds.SHOOT.getUrl()).toExternalForm());
+//        bulletSoundPlayer = new MediaPlayer(bulletSound);
     }
 
     public void createGame(Stage mainStage) {
@@ -114,9 +145,20 @@ public class Game {
         createGameElements();
         createGameLoop();
         gameStage.show();
+        backgroundSoundPlayer.play();
     }
 
     private void createGameElements(){
+        gamePane.getChildren().add(BulletIcon.getInstance());
+        Rectangle timerFrame = new Rectangle(397, 7, 106, 26);
+        gamePane.getChildren().add(timerFrame);
+        gamePane.getChildren().add(RocketTimer.getInstance());
+//        Text rocketText = new Text("rocket timer");
+//        rocketText.setLayoutX(420);
+//        rocketText.setY(12);
+//        gamePane.getChildren().add(rocketText);
+
+
 //        Button b = new GameButton("test");
 //        b.setLayoutX(50);
 //        b.setLayoutY(50);
@@ -142,18 +184,32 @@ public class Game {
         };
         miniBossLoop.start();
 
-        shoot = new PeriodicTask(1) {
+        PeriodicTask RocketTime = new PeriodicTask(3) {
+            @Override
+            public void run() {
+                if(RocketTimer.getInstance().getWidth() < 100)
+                    RocketTimer.getInstance().setWidth(RocketTimer.getInstance().getWidth() + 20);
+            }
+        };
+        RocketTime.start();
+
+        shoot = new PeriodicTask(0.5) {
             @Override
             public void run() {
                 if(isSpaseKeyPressed){
-                    String musicFile = "StayTheNight.mp3";     // For example
+                    Bullet bullet;
+                    if(BulletIcon.isBullet()) {
+                        Media bulletSound = new Media(getClass().getResource(Sounds.SHOOT.getUrl()).toExternalForm());
+                        MediaPlayer bulletSoundPlayer = new MediaPlayer(bulletSound);
+                        bulletSoundPlayer.play();
 
-//                    Media sound = new Media(new File(musicFile).toURI().toString());
-//                    MediaPlayer mediaPlayer = new MediaPlayer(sound);
-//                    mediaPlayer.play();
-
-                    Bullet bullet = new Bullet(avatar.getX() + avatar.getWidth()/2,
-                            avatar.getY() + avatar.getHeight() / 2);
+                        bullet = new Bullet(avatar.getX() + avatar.getWidth() / 2,
+                                avatar.getY() + avatar.getHeight() / 2, 72, 15);
+                    }
+                    else {
+                        bullet = new Bullet(avatar.getX() + avatar.getWidth() / 2,
+                                avatar.getY() + avatar.getHeight() / 2, 36, 55);
+                    }
                     gamePane.getChildren().add(bullet);
                     BulletAnimation animation = new BulletAnimation(Bullet.getBullets(), bullet, gamePane);
                     animation.play();
@@ -214,5 +270,15 @@ public class Game {
             shoot.stop();
         }
 
+    }
+    public static int getGameHeight(){
+        return GAME_HEIGHT;
+    }
+    public static int getGameWidth(){
+        return GAME_WIDTH;
+    }
+
+    public AnchorPane getGamePane() {
+        return gamePane;
     }
 }

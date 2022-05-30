@@ -43,8 +43,6 @@ public class FirstPageController extends Menu {
     }
 
 
-
-
     public void typePassword(KeyEvent keyEvent) {
 
         int strength = password.getText().length();

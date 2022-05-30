@@ -6,8 +6,10 @@ public enum Images {
     CROSS("/cupheadProject/png/cross.png"),
     BUTTOM("/cupheadProject/png/button.png"),
     PRESSEDBUTTOM("/cupheadProject/png/pressed_button.png"),
-    BULLET("/cupheadProject/png/bullet.png");
-
+    BULLET("/cupheadProject/png/bullet.png"),
+    BOMB("/cupheadProject/png/bomb.png"),
+    BULLETICON("/cupheadProject/png/bullet_icon.png"),
+    BOMBICON("/cupheadProject/png/bomb_icon.png");
 
     private String url;
 

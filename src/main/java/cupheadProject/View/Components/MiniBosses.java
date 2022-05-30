@@ -47,4 +47,11 @@ public class MiniBosses extends Rectangle {
         }
         return null;
     }
+
+    public boolean hasCollision(Avatar avatar) {
+        if(((Rectangle) avatar).getBoundsInParent().intersects(this.getLayoutBounds())){
+            return true;
+        }
+        return false;
+    }
 }

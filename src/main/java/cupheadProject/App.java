@@ -2,6 +2,7 @@ package cupheadProject;
 
 import cupheadProject.Enums.AvatarAddress;
 import cupheadProject.View.Game;
+import cupheadProject.View.Menu;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,6 +23,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Pane pane = FXMLLoader.load(App.class.getResource("fxml/FirstPage.fxml"));
+        Menu.playMenuSound();
         scene = new Scene(pane);
         mainStage = new Stage();
         mainStage.setScene(scene);

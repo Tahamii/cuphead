@@ -32,7 +32,7 @@ public class ChooseAvatar {
 
     public ChooseAvatar() {
         avatarPane = new BorderPane();
-        avatarScene = new Scene(avatarPane, 600, 400);
+        avatarScene = new Scene(avatarPane, 600, 500);
         addElements();
     }
 
@@ -142,6 +142,7 @@ public class ChooseAvatar {
 
     private void startGame() {
         System.out.println("started");
+        Menu.stopMenuSound();
         Game gameManager = new Game();
         Stage stage = new Stage();
         App.setMainStage(stage);

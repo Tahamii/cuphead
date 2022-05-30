@@ -1,12 +1,15 @@
 package cupheadProject.View.Components;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+
+import java.util.ArrayList;
 
 public class Avatar extends Rectangle {
     private static Avatar instance;
+    private boolean isRocket;
 
     public static Avatar getInstance() {
         if (instance == null)
@@ -15,7 +18,7 @@ public class Avatar extends Rectangle {
     }
     private Avatar() {
         super(10, 200, 109, 95);
-//        this.getStyleClass().add("board");
+        isRocket = false;
     }
 
     public void setBackground(String url) {
@@ -26,9 +29,23 @@ public class Avatar extends Rectangle {
         this.setFill(new ImagePattern(image));
     }
 
-//    public Image getBackground(){
-//        return (Image) this.getFill();
-//    }
+    public boolean isRocket() {
+        return isRocket;
+    }
+
+    public void setRocket(boolean rocket) {
+        isRocket = rocket;
+    }
+
+    public Rectangle hasCollision(ArrayList<MiniBosses> blocks){
+        for (Rectangle block : blocks) {
+            if(block.getBoundsInParent().intersects(this.getLayoutBounds())){
+//                System.out.println(block);
+                return block;
+            }
+        }
+        return null;
+    }
 
     public void moveRight() {
         if (!hitRightWall())
