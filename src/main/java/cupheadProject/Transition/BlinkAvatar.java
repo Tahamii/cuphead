@@ -1,19 +1,16 @@
 package cupheadProject.Transition;
 
 import cupheadProject.View.Components.Avatar;
-import cupheadProject.View.Components.Boom;
+import cupheadProject.View.Components.RectangleNode;
 import cupheadProject.View.Game;
 import javafx.animation.Transition;
-import javafx.scene.image.Image;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 public class BlinkAvatar extends Transition {
-    private Boom blink;
+    private RectangleNode blink;
     private double x;
     private double y;
-    public BlinkAvatar(double x, double y, Boom blink){
+    public BlinkAvatar(double x, double y, RectangleNode blink){
         this.blink = blink;
         this.x = x;
         this.y = y;

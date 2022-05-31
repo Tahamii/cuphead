@@ -1,21 +1,15 @@
 package cupheadProject.Transition;
 
-import cupheadProject.App;
-import cupheadProject.View.Components.Avatar;
-import cupheadProject.View.Components.Boom;
+import cupheadProject.View.Components.RectangleNode;
 import javafx.animation.Transition;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 public class BoomAnimation extends Transition {
     private AnchorPane pane;
-    private Boom image;
+    private RectangleNode image;
 
-    public BoomAnimation(AnchorPane pane, Boom image){
+    public BoomAnimation(AnchorPane pane, RectangleNode image){
 //        pane.getChildren().add(image);
         this.image = image;
         this.pane = pane;

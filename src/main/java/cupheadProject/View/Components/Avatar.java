@@ -5,7 +5,6 @@ import cupheadProject.View.Game;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
@@ -67,7 +66,7 @@ public class Avatar extends Rectangle {
             Game.getInstance().getAvatarLife().setFill(Color.RED);
         }
         Game.getInstance().getAvatarLife().setText(String.valueOf("life: " + this.life));
-        Boom blink = new Boom(this.getX(), this.getY());
+        RectangleNode blink = new RectangleNode(this.getX(), this.getY());
         Game.getGamePane().getChildren().add(blink);
         BlinkAvatar blinkAvatar = new BlinkAvatar(this.getX(), this.getY(), blink);
         blinkAvatar.play();

@@ -3,7 +3,6 @@ package cupheadProject.Transition;
 import cupheadProject.View.Components.*;
 import javafx.animation.Transition;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
@@ -48,8 +47,8 @@ public class MiniBossAnimation extends Transition {
                 MiniBosses.remove(miniBosses.get(i));
             }
             else if(miniBosses.get(i).getLife() <= 0){
-                Boom boom = new Boom(miniBosses.get(i).getX(), miniBosses.get(i).getY());
-////              Boom boom = Boom.getInstance(Avatar.getInstance().getX(), Avatar.getInstance().getY());
+                RectangleNode boom = new RectangleNode(miniBosses.get(i).getX(), miniBosses.get(i).getY());
+////              RectangleNode boom = RectangleNode.getInstance(Avatar.getInstance().getX(), Avatar.getInstance().getY());
                 pane.getChildren().add(boom);
                 BoomAnimation animation = new BoomAnimation(pane, boom);
                 animation.play();

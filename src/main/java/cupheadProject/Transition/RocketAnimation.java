@@ -1,12 +1,10 @@
 package cupheadProject.Transition;
 
-import cupheadProject.Enums.AvatarAddress;
 import cupheadProject.View.Components.*;
 import cupheadProject.View.Game;
 import javafx.animation.Transition;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 public class RocketAnimation extends Transition {
@@ -52,7 +50,7 @@ public class RocketAnimation extends Transition {
     }
 
     private void playBoom(){
-        Boom boom = new Boom(Avatar.getInstance().getX(), Avatar.getInstance().getY());
+        RectangleNode boom = new RectangleNode(Avatar.getInstance().getX(), Avatar.getInstance().getY());
         pane.getChildren().add(boom);
         BoomAnimation animation = new BoomAnimation(pane, boom);
         animation.play();
