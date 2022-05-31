@@ -12,7 +12,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
@@ -128,12 +127,10 @@ public class ChooseAvatar {
                 FileChooser fileChooser = new FileChooser();
                 fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("png Files", "*.png"));
                 File selectedFile = fileChooser.showOpenDialog(null);
-                if(selectedFile != null){
+                if (selectedFile != null) {
                     Image image = new Image(selectedFile.toURI().toString());
-//                    ImageView view = new ImageView(image);
                     Avatar.getInstance().setBackground(image);
                     startGame();
-//                    avatarPane.getChildren().add(view);
                 }
             }
         });
@@ -143,23 +140,9 @@ public class ChooseAvatar {
     private void startGame() {
         System.out.println("started");
         Menu.stopMenuSound();
-//        Game gameManager = new Game();
         Game.getInstance();
         Stage stage = new Stage();
         App.setMainStage(stage);
     }
 
-
-//    private void addImage(String url) {
-//        Image image = new Image(getClass().getResource(url).toExternalForm());
-//        ImageView view = new ImageView(image);
-//        view.setFitWidth(140);
-//        view.setFitHeight(120);
-//        VBox vBox = new VBox();
-//        vBox.getChildren().add(view);
-//        Button button = new Button();
-//        vBox.getChildren().add(button);
-//        hBox.setAlignment(Pos.CENTER);
-//        hBox.getChildren().add(vBox);
-//    }
 }

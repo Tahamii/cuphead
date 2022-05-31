@@ -23,10 +23,6 @@ public class MiniBosses extends Rectangle {
         miniBosses.remove(miniBoss);
     }
 
-    public void fill(String url){
-        this.setFill(new ImagePattern(new Image(getClass().getResource(url).toExternalForm())));
-    }
-
     public static ArrayList<MiniBosses> getMiniBosses() {
         return miniBosses;
     }
@@ -53,5 +49,9 @@ public class MiniBosses extends Rectangle {
             return true;
         }
         return false;
+    }
+
+    public void fill(String url){
+        this.setFill(new ImagePattern(new Image(getClass().getResource(url).toExternalForm())));
     }
 }

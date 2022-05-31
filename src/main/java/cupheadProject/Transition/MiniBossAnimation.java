@@ -26,9 +26,9 @@ public class MiniBossAnimation extends Transition {
 
             miniBosses.get(i).setX(miniBosses.get(i).getX() - 2);
 
-            if(miniBosses.get(i).hasCollision(Bullet.getBullets()) != null){
-                if(BulletIcon.isBullet())
-                    miniBosses.get(i).setLife( miniBosses.get(i).getLife() - 1);
+            if (miniBosses.get(i).hasCollision(Bullet.getBullets()) != null) {
+                if (BulletIcon.isBullet())
+                    miniBosses.get(i).setLife(miniBosses.get(i).getLife() - 1);
                 else {
                     miniBosses.get(i).setLife(miniBosses.get(i).getLife() - 2);
                     Avatar.getInstance().setScore(Avatar.getInstance().getScore() + 1);
@@ -37,18 +37,16 @@ public class MiniBossAnimation extends Transition {
                 Bullet.remove((Bullet) miniBosses.get(i).hasCollision(Bullet.getBullets()));
             }
 
-            if(!Avatar.getInstance().isRocket() && miniBosses.get(i).hasCollision(Avatar.getInstance())){
-                miniBosses.get(i).setLife( miniBosses.get(i).getLife() - 2);
+            if (!Avatar.getInstance().isRocket() && miniBosses.get(i).hasCollision(Avatar.getInstance())) {
+                miniBosses.get(i).setLife(miniBosses.get(i).getLife() - 2);
                 Avatar.getInstance().setLife(Avatar.getInstance().getLife() - 1 * Avatar.getInstance().getVulnerability());
             }
 
-            if (miniBosses.get(i).getX() < -158 ) {
+            if (miniBosses.get(i).getX() < -158) {
                 pane.getChildren().remove(miniBosses.get(i));
                 MiniBosses.remove(miniBosses.get(i));
-            }
-            else if(miniBosses.get(i).getLife() <= 0){
+            } else if (miniBosses.get(i).getLife() <= 0) {
                 RectangleNode boom = new RectangleNode(miniBosses.get(i).getX(), miniBosses.get(i).getY());
-////              RectangleNode boom = RectangleNode.getInstance(Avatar.getInstance().getX(), Avatar.getInstance().getY());
                 pane.getChildren().add(boom);
                 BoomAnimation animation = new BoomAnimation(pane, boom);
                 animation.play();

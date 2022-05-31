@@ -16,7 +16,7 @@
     <center>
 
         <VBox spacing="10" alignment="CENTER" maxWidth="350">
-            <Text id="title" text="Profile menu" />
+            <Text id="title" text="Profile menu"/>
             <Button text="choose avatar and start the game" styleClass="secondary-btn" onMouseClicked="#chooseAvatar"/>
             <Button text="change username or password" styleClass="secondary-btn" onMouseClicked="#changeUser"/>
             <Button text="delete account" styleClass="secondary-btn" onMouseClicked="#deleteAccount"/>

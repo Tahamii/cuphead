@@ -8,7 +8,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
 public class AvatarTypeSetter extends VBox {
-
     private ImageView circleImage;
     private ImageView avatarImage;
 
@@ -19,8 +18,6 @@ public class AvatarTypeSetter extends VBox {
     public AvatarTypeSetter(AvatarAddress avatar) {
         circleImage = new ImageView(new Image(getClass().getResource(Images.CROSS.getUrl()).toExternalForm()));
         avatarImage = new ImageView(new Image(getClass().getResource(avatar.getUrl()).toExternalForm()));
-//        avatarImage.setFitWidth(140);
-//        avatarImage.setFitHeight(120);
         this.avatar = avatar;
         isChoosen = false;
         this.setSpacing(10);

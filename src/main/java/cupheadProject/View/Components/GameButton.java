@@ -8,8 +8,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
-public class GameButton extends Button{
-//    private final String FONT_PATH = "/resources/kenvector_future.ttf";
+public class GameButton extends Button {
     private final String BUTTON_PRESSED = "/cupheadProject/png/pressed_button.png";
     private final String BUTTON_FREE = "/cupheadProject/png/button.png";
     private Background pressedBackground;
@@ -25,30 +24,21 @@ public class GameButton extends Button{
     }
 
     private void createBackgrounds() {
-        BackgroundImage backgroundImage = new BackgroundImage( new Image( getClass().getResource(BUTTON_FREE).toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResource(BUTTON_FREE).toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         freeBackground = new Background(backgroundImage);
-        BackgroundImage backgroundImage2 = new BackgroundImage( new Image( getClass().getResource(BUTTON_PRESSED).toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        BackgroundImage backgroundImage2 = new BackgroundImage(new Image(getClass().getResource(BUTTON_PRESSED).toExternalForm()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         pressedBackground = new Background(backgroundImage2);
     }
 
-    //    private void setButtonFont() {
-//
-//        setFont(Font.loadFont(getClass().getResourceAsStream(FONT_PATH), 23));
-//
-//    }
 
     private void setButtonPressedStyle() {
         setBackground(pressedBackground);
-//        System.out.println("pressed");
-//        System.out.println(this.getBackground());
         setPrefHeight(45);
         setLayoutY(getLayoutY() + 4);
     }
 
     private void setButtonReleasedStyle() {
         setBackground(freeBackground);
-//        System.out.println("released");
-//        System.out.println(this.getBackground());
         setPrefHeight(49);
         setLayoutY(getLayoutY() - 4);
     }
@@ -59,7 +49,7 @@ public class GameButton extends Button{
 
             @Override
             public void handle(MouseEvent event) {
-                if(event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getButton().equals(MouseButton.PRIMARY)) {
                     setButtonPressedStyle();
                 }
 
@@ -70,7 +60,7 @@ public class GameButton extends Button{
 
             @Override
             public void handle(MouseEvent event) {
-                if(event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getButton().equals(MouseButton.PRIMARY)) {
                     setButtonReleasedStyle();
                 }
 

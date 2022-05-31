@@ -42,6 +42,15 @@ public class User {
         }
     }
 
+    public static void deleteUser(String username){
+        for (User user : USERS) {
+            if(user.username.equals(username)){
+                USERS.remove(user);
+                return;
+            }
+        }
+    }
+
     public String getPassword() {
         return password;
     }
@@ -58,12 +67,4 @@ public class User {
         this.username = username;
     }
 
-    public static void deleteUser(String username){
-        for (User user : USERS) {
-            if(user.username.equals(username)){
-                USERS.remove(user);
-                return;
-            }
-        }
-    }
 }

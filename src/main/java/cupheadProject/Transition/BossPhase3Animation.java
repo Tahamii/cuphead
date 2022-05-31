@@ -15,7 +15,7 @@ public class BossPhase3Animation extends Transition {
     private boolean right;
     private boolean left;
 
-    public BossPhase3Animation(){
+    public BossPhase3Animation() {
         Boss.getInstance().setBackground("/cupheadProject/png/boss_shoot_3/0.png");
         Boss.getInstance().setHeight(161);
         Boss.getInstance().setWidth(448);
@@ -27,6 +27,7 @@ public class BossPhase3Animation extends Transition {
         this.setCycleDuration(Duration.millis(1000));
         this.setCycleCount(-1);
     }
+
     @Override
     protected void interpolate(double v) {
         if (right) {

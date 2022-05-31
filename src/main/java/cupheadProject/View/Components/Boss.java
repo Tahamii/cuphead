@@ -12,16 +12,18 @@ public class Boss extends Rectangle {
     private double life = TOTAL_LIFE;
     private boolean phase3 = false;
 
+    private Boss() {
+        super(500, 100, 397.5, 253.5);
+        this.setBackground("/cupheadProject/png/boss_fly/0.png");
+    }
+
     public static Boss getInstance() {
         if (instance == null)
             instance = new Boss();
         return instance;
     }
 
-    private Boss(){
-        super(500, 100, 397.5, 253.5);
-        this.setBackground("/cupheadProject/png/boss_fly/0.png");
-    }
+    public static double getTotalLife() { return TOTAL_LIFE; }
 
     public void setBackground(String url) {
         this.setFill(new ImagePattern(new Image(App.class.getResource(url).toExternalForm())));
@@ -36,10 +38,6 @@ public class Boss extends Rectangle {
         BossLife.getInstance().update();
     }
 
-    public static double getTotalLife(){
-        return TOTAL_LIFE;
-    }
-
     public boolean isPhase3() {
         return phase3;
     }
@@ -48,46 +46,46 @@ public class Boss extends Rectangle {
         this.phase3 = phase3;
     }
 
-    public void moveRight(){
-        if(moveRightPossible())
+    public void moveRight() {
+        if (moveRightPossible())
             this.setX(this.getX() + 5);
     }
 
-    public void moveLeft(){
-        if(moveLeftPossible())
+    public void moveLeft() {
+        if (moveLeftPossible())
             this.setX(this.getX() - 5);
     }
 
-    public void moveUp(){
-        if(moveUpPossible())
+    public void moveUp() {
+        if (moveUpPossible())
             this.setY(this.getY() - 5);
     }
 
-    public void moveDown(){
-        if(moveDownPossible())
+    public void moveDown() {
+        if (moveDownPossible())
             this.setY(this.getY() + 5);
     }
 
-    public boolean moveRightPossible(){
-        if(this.getX() < Game.getGameWidth() - this.getWidth())
+    public boolean moveRightPossible() {
+        if (this.getX() < Game.getGameWidth() - this.getWidth())
             return true;
         return false;
     }
 
-    public boolean moveLeftPossible(){
-        if(this.getX() > 0)
+    public boolean moveLeftPossible() {
+        if (this.getX() > 0)
             return true;
         return false;
     }
 
-    public boolean moveDownPossible(){
+    public boolean moveDownPossible() {
         if (this.getY() < Game.getGameHeight() - this.getHeight())
             return true;
         return false;
     }
 
-    public boolean moveUpPossible(){
-        if(this.getY() > 0)
+    public boolean moveUpPossible() {
+        if (this.getY() > 0)
             return true;
         return false;
     }

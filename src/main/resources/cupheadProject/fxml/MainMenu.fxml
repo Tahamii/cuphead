@@ -16,10 +16,10 @@
     <center>
 
         <VBox spacing="10" alignment="CENTER" maxWidth="350">
-            <Text id="title" text="Main menu" />
+            <Text id="title" text="Main menu"/>
             <Button text="new game" styleClass="secondary-btn" onMouseClicked="#chooseAvatar"/>
             <Button fx:id="profile" text="profile" styleClass="secondary-btn" onMouseClicked="#profileMenu"/>
-            <Button text="score board" styleClass="secondary-btn" />
+            <Button text="score board" styleClass="secondary-btn"/>
             <Button text="setting" styleClass="secondary-btn" onMouseClicked="#setting"/>
             <Button text="exit" styleClass="secondary-btn" onMouseClicked="#exit"/>
         </VBox>

@@ -17,21 +17,22 @@ public class Avatar extends Rectangle {
     private double Injury = 1;
     private double Vulnerability = 1;
 
+    private Avatar() {
+        super(10, 200, 109, 95);
+        isRocket = false;
+    }
+
     public static Avatar getInstance() {
         if (instance == null)
             instance = new Avatar();
         return instance;
-    }
-    private Avatar() {
-        super(10, 200, 109, 95);
-        isRocket = false;
     }
 
     public void setBackground(String url) {
         this.setFill(new ImagePattern(new Image(getClass().getResource(url).toExternalForm())));
     }
 
-    public void setBackground(Image image){
+    public void setBackground(Image image) {
         this.setFill(new ImagePattern(image));
     }
 
@@ -49,7 +50,7 @@ public class Avatar extends Rectangle {
 
     public void setScore(double score) {
         this.score = score;
-        if(Game.getInstance().getScore() != null)
+        if (Game.getInstance().getScore() != null)
             Game.getInstance().getScore().setText(String.valueOf(this.score));
     }
 
@@ -59,10 +60,10 @@ public class Avatar extends Rectangle {
 
     public void setLife(double life) {
         this.life = life;
-        if(Game.getInstance().getAvatarLife() == null) {
+        if (Game.getInstance().getAvatarLife() == null) {
             return;
         }
-        if(Avatar.getInstance().getLife() <= 1){
+        if (Avatar.getInstance().getLife() <= 1) {
             Game.getInstance().getAvatarLife().setFill(Color.RED);
         }
         Game.getInstance().getAvatarLife().setText(String.valueOf("life: " + this.life));
@@ -90,9 +91,9 @@ public class Avatar extends Rectangle {
         Vulnerability = vulnerability;
     }
 
-    public Rectangle hasCollision(ArrayList<MiniBosses> blocks){
+    public Rectangle hasCollision(ArrayList<MiniBosses> blocks) {
         for (Rectangle block : blocks) {
-            if(block.getBoundsInParent().intersects(this.getLayoutBounds())){
+            if (block.getBoundsInParent().intersects(this.getLayoutBounds())) {
 //                System.out.println(block);
                 return block;
             }
@@ -100,8 +101,8 @@ public class Avatar extends Rectangle {
         return null;
     }
 
-    public boolean hasCollision(Rectangle block){
-        if(block.getBoundsInParent().intersects(this.getLayoutBounds())){
+    public boolean hasCollision(Rectangle block) {
+        if (block.getBoundsInParent().intersects(this.getLayoutBounds())) {
             return true;
         }
         return false;
@@ -117,11 +118,29 @@ public class Avatar extends Rectangle {
             this.setX(this.getX() - 10);
     }
 
+    public void moveDown() {
+        if (!hitFloor())
+            this.setY(this.getY() + 10);
+    }
+
+    public void moveUp() {
+        if (!hitRoof())
+            this.setY(this.getY() - 10);
+    }
+
     public boolean hitRightWall() {
-        return this.getX() + this.getWidth() >= 600;
+        return this.getX() + this.getWidth() >= Game.getGameWidth();
     }
 
     public boolean hitLeftWall() {
         return this.getX() <= 0;
+    }
+
+    public boolean hitFloor() {
+        return this.getY() + this.getHeight() >= Game.getGameHeight();
+    }
+
+    public boolean hitRoof() {
+        return this.getY() <= 0;
     }
 }

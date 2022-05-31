@@ -10,13 +10,12 @@ public enum Images {
     BOMB("/cupheadProject/png/bomb.png"),
     BULLETICON("/cupheadProject/png/bullet_icon.png"),
     BOMBICON("/cupheadProject/png/bomb_icon.png"),
-    EGG("/cupheadProject/png/egg.png");
+    EGG("/cupheadProject/png/egg.png"),
+    BACKGROUND("/cupheadProject/png/background.png");
 
     private String url;
 
-    private Images(String url){
-        this.url = url;
-    }
+    private Images(String url) { this.url = url; }
 
     public String getUrl() {
         return this.url;

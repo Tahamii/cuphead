@@ -27,16 +27,15 @@ public class FirstPageController extends Menu {
 
     public void register(MouseEvent mouseEvent) {
         System.out.println("+++" + username.getText());
-        if(!UserController.getInstance().handleRegister(username.getText(), password.getText())){
+        if (!UserController.getInstance().handleRegister(username.getText(), password.getText())) {
             showErrorMessage("this username is not available");
         }
     }
 
-    public void login(MouseEvent mouseEvent){
-        if(!UserController.getInstance().handleLogin(username.getText(), password.getText())){
+    public void login(MouseEvent mouseEvent) {
+        if (!UserController.getInstance().handleLogin(username.getText(), password.getText())) {
             showErrorMessage("username or password is wrong");
-        }
-        else{
+        } else {
             this.switchToPage("MainMenu");
         }
     }
@@ -60,12 +59,5 @@ public class FirstPageController extends Menu {
     public void skip(MouseEvent mouseEvent) {
         this.switchToPage("MainMenu");
     }
-
-
-
-//    private void createBackGround(){
-//        Image backgroundImage = new Image("sf");
-//        BackgroundImage background = new
-//    }
 
 }

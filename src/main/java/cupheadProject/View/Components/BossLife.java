@@ -8,16 +8,16 @@ public class BossLife extends Rectangle {
     private static BossLife instance = null;
     private double number;
 
-    public static BossLife getInstance(){
-        if (instance == null)
-            instance = new BossLife();
-        return instance;
-    }
-
     private BossLife(){
         super(600, 10, 100, 20);
         this.setFill(Color.rgb(234,68,68));
         this.number = 100;
+    }
+
+    public static BossLife getInstance(){
+        if (instance == null)
+            instance = new BossLife();
+        return instance;
     }
 
     public void update(){

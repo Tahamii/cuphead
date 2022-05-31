@@ -13,7 +13,7 @@ public class RocketAnimation extends Transition {
     AnchorPane pane;
     MiniBosses miniBoss;
 
-    public RocketAnimation(AnchorPane pane){
+    public RocketAnimation(AnchorPane pane) {
         this.pane = pane;
         this.first = true;
         this.avatarBackground = Avatar.getInstance().getFill();
@@ -21,18 +21,19 @@ public class RocketAnimation extends Transition {
         this.setCycleDuration(Duration.millis(1000));
         this.setCycleCount(-1);
     }
+
     @Override
     protected void interpolate(double v) {
-        if(first) {
+        if (first) {
             int frame = (int) Math.floor(v * 13);
             Avatar.getInstance().setBackground("/cupheadProject/png/rocket/" + frame + ".png");
             if (Avatar.getInstance().getX() < Game.getGameWidth())
                 Avatar.getInstance().setX(Avatar.getInstance().getX() + 5);
-            if(frame == 13)
+            if (frame == 13)
                 first = false;
         }
         miniBoss = (MiniBosses) Avatar.getInstance().hasCollision(MiniBosses.getMiniBosses());
-        if(miniBoss != null){
+        if (miniBoss != null) {
             playBoom();
             pane.getChildren().remove(miniBoss);
             MiniBosses.remove(miniBoss);
@@ -40,7 +41,7 @@ public class RocketAnimation extends Transition {
             updateAvatar();
             this.stop();
         }
-        if(Avatar.getInstance().hasCollision(Boss.getInstance())){
+        if (Avatar.getInstance().hasCollision(Boss.getInstance())) {
             playBoom();
             Boss.getInstance().setLife(Boss.getInstance().getLife() - 4 * Avatar.getInstance().getInjury());
             Avatar.getInstance().setScore(Avatar.getInstance().getScore() + 3);
@@ -49,14 +50,14 @@ public class RocketAnimation extends Transition {
         }
     }
 
-    private void playBoom(){
+    private void playBoom() {
         RectangleNode boom = new RectangleNode(Avatar.getInstance().getX(), Avatar.getInstance().getY());
         pane.getChildren().add(boom);
         BoomAnimation animation = new BoomAnimation(pane, boom);
         animation.play();
     }
 
-    private void updateAvatar(){
+    private void updateAvatar() {
         Avatar.getInstance().setFill(avatarBackground);
         Avatar.getInstance().setX(10);
         Avatar.getInstance().setY(200);

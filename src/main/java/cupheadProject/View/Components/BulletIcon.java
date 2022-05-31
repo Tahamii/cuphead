@@ -10,24 +10,27 @@ public class BulletIcon extends Rectangle {
     private static BulletIcon instance = null;
     private static boolean bullet;
 
+    private BulletIcon() {
+        super(0, 0, 40, 40);
+        this.bullet = true;
+        this.setBackground(Images.BULLETICON.getUrl());
+    }
+
     public static BulletIcon getInstance() {
         if (instance == null)
             instance = new BulletIcon();
         return instance;
     }
 
-    private BulletIcon(){
-        super(0, 0,40, 40);
-        this.bullet = true;
-        this.setBackground(Images.BULLETICON.getUrl());
+    public static boolean isBullet() {
+        return bullet;
     }
 
-    public void switchIcon(){
-        if(bullet){
+    public void switchIcon() {
+        if (bullet) {
             this.setBackground(Images.BOMBICON.getUrl());
             bullet = false;
-        }
-        else{
+        } else {
             this.setBackground(Images.BULLETICON.getUrl());
             bullet = true;
         }
@@ -35,9 +38,5 @@ public class BulletIcon extends Rectangle {
 
     public void setBackground(String url) {
         this.setFill(new ImagePattern(new Image(getClass().getResource(url).toExternalForm())));
-    }
-
-    public static boolean isBullet() {
-        return bullet;
     }
 }

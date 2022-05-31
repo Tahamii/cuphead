@@ -10,17 +10,10 @@ import java.util.ArrayList;
 public class Bullet extends Rectangle {
     private static ArrayList<Bullet> bullets = new ArrayList<>();
 
-    public Bullet(double x, double y, double w, double h){
+    public Bullet(double x, double y, double w, double h) {
         super(x, y, w, h);
         this.fill(w);
         bullets.add(this);
-    }
-
-    private void fill(double w){
-        if(w == 72)
-            this.setFill(new ImagePattern(new Image(getClass().getResource(Images.BULLET.getUrl()).toExternalForm())));
-        else
-            this.setFill(new ImagePattern(new Image(getClass().getResource(Images.BOMB.getUrl()).toExternalForm())));
     }
 
     public static ArrayList<Bullet> getBullets() {
@@ -31,11 +24,17 @@ public class Bullet extends Rectangle {
         bullets.remove(bullet);
     }
 
-    public static boolean hasCollision(Rectangle boss, int i){
-        if(boss.getBoundsInParent().intersects(bullets.get(i).getLayoutBounds())){
-//                System.out.println(block);
+    public static boolean hasCollision(Rectangle boss, int i) {
+        if (boss.getBoundsInParent().intersects(bullets.get(i).getLayoutBounds())) {
             return true;
         }
         return false;
+    }
+
+    private void fill(double w) {
+        if (w == 72)
+            this.setFill(new ImagePattern(new Image(getClass().getResource(Images.BULLET.getUrl()).toExternalForm())));
+        else
+            this.setFill(new ImagePattern(new Image(getClass().getResource(Images.BOMB.getUrl()).toExternalForm())));
     }
 }

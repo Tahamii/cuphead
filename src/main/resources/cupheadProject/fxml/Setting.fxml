@@ -15,14 +15,14 @@
     <center>
 
         <VBox spacing="10" alignment="CENTER" maxWidth="350">
-            <Text id="title" text="setting" />
+            <Text id="title" text="setting"/>
             <Button text="easy" styleClass="secondary-btn" onMouseClicked="#levelOne"/>
             <Button text="normal" styleClass="secondary-btn" onMouseClicked="#levelTwo"/>
             <Button text="hard" styleClass="secondary-btn" onMouseClicked="#levelThree"/>
             <Button text="devil mode" styleClass="secondary-btn" onMouseClicked="#levelThree"/>
             <Button fx:id="mute" text="mute" styleClass="secondary-btn" onMouseClicked="#mute"/>
             <Button text="black and white" styleClass="secondary-btn" onMouseClicked="#noColor"/>
-            <Button text="return to main menu"  onMouseClicked="#mainMenu"/>
+            <Button text="return to main menu" onMouseClicked="#mainMenu"/>
         </VBox>
 
     </center>

@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 
-public class MainMenuController extends Menu{
+public class MainMenuController extends Menu {
     @FXML
     public Button profile;
 
@@ -16,20 +16,19 @@ public class MainMenuController extends Menu{
     }
 
     public void profileMenu() {
-        if(UserController.getInstance().getLoggedInUser() == null){
+        if (UserController.getInstance().getLoggedInUser() == null) {
             profile.setDisable(true);
             showErrorMessage("you should login first");
-        }
-        else {
+        } else {
             switchToPage("ProfileMenu");
         }
     }
 
-    public void setting(){
+    public void setting() {
         switchToPage("setting");
     }
 
-    public void exit(){
+    public void exit() {
         App.getMainStage().close();
     }
 }

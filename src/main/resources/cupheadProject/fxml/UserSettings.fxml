@@ -14,11 +14,11 @@
             stylesheets="@../css/style.css">
     <center>
         <VBox spacing="10" alignment="CENTER" maxWidth="350">
-            <Text id="title" text="User Settings" />
+            <Text id="title" text="User Settings"/>
             <Label text="New Username"/>
-            <TextField fx:id="newUsername" promptText="enter your new username" />
+            <TextField fx:id="newUsername" promptText="enter your new username"/>
             <Label text="New Password"/>
-            <TextField fx:id="newPassword" promptText="enter your new password" />
+            <TextField fx:id="newPassword" promptText="enter your new password"/>
             <Button text="update user info" styleClass="secondary-btn" onMouseClicked="#updateInfo"/>
         </VBox>
     </center>

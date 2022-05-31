@@ -9,8 +9,7 @@ public class BoomAnimation extends Transition {
     private AnchorPane pane;
     private RectangleNode image;
 
-    public BoomAnimation(AnchorPane pane, RectangleNode image){
-//        pane.getChildren().add(image);
+    public BoomAnimation(AnchorPane pane, RectangleNode image) {
         this.image = image;
         this.pane = pane;
         this.setCycleDuration(Duration.millis(1000));
@@ -21,7 +20,7 @@ public class BoomAnimation extends Transition {
     protected void interpolate(double v) {
         int frame = (int) Math.floor(v * 11);
         image.setBackground("/cupheadProject/png/boom/" + frame + ".png");
-        if(frame == 11){
+        if (frame == 11) {
             pane.getChildren().remove(image);
             this.stop();
         }

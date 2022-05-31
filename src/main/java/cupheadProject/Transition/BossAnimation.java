@@ -11,16 +11,17 @@ public class BossAnimation extends Transition {
     private boolean down;
     private boolean up;
 
-    public BossAnimation(){
+    public BossAnimation() {
         down = true;
         up = false;
         bossShoot = new BossShoot();
         this.setCycleDuration(Duration.millis(1000));
         this.setCycleCount(-1);
     }
+
     @Override
     protected void interpolate(double v) {
-        if(BossLife.getInstance().getNumber() > 50) {
+        if (BossLife.getInstance().getNumber() > 50) {
             int frame = (int) Math.floor(v * 5);
             Boss.getInstance().setBackground("/cupheadProject/png/boss_fly/" + frame + ".png");
 
@@ -44,8 +45,7 @@ public class BossAnimation extends Transition {
                     down = true;
                 }
             }
-        }
-        else {
+        } else {
             this.stop();
             bossShoot.stop();
             BossPhase2Animation animation = new BossPhase2Animation();

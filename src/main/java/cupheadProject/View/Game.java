@@ -14,7 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -41,11 +41,10 @@ public class Game {
 
     private Avatar avatar;
 
-    Random randomPositionGenerator;
+    private Random randomPositionGenerator;
 
-    PeriodicTask shoot;
-    MediaPlayer backgroundSoundPlayer;
-    MediaPlayer bulletSoundPlayer;
+    private PeriodicTask shoot;
+    private MediaPlayer backgroundSoundPlayer;
 
     private Text bossLife;
     private Text avatarLife;
@@ -63,17 +62,45 @@ public class Game {
     private static final int GAME_WIDTH = 900;
     private static final int GAME_HEIGHT = 800;
 
+    private Game() {
+        initializeStage();
+        createKeyListeners();
+        createMedia();
+        randomPositionGenerator = new Random();
+    }
+
     public static Game getInstance() {
         if (instance == null)
             instance = new Game();
         return instance;
     }
 
-    private Game() {
-        initializeStage();
-        createKeyListeners();
-        createMedia();
-        randomPositionGenerator = new Random();
+    public static int getGameHeight() {
+        return GAME_HEIGHT;
+    }
+
+    public static int getGameWidth() {
+        return GAME_WIDTH;
+    }
+
+    public static AnchorPane getGamePane() {
+        return gamePane;
+    }
+
+    public Text getBossLife() {
+        return bossLife;
+    }
+
+    public Text getAvatarLife() {
+        return avatarLife;
+    }
+
+    public Text getScore() {
+        return score;
+    }
+
+    public void setIsMute(boolean isMute) {
+        this.isMute = isMute;
     }
 
     private void initializeStage() {
@@ -89,28 +116,22 @@ public class Game {
 
             @Override
             public void handle(KeyEvent event) {
-                if(event.getCode() == KeyCode.W || event.getCode() == KeyCode.UP){
+                if (event.getCode() == KeyCode.W || event.getCode() == KeyCode.UP) {
                     isUpKeyPressed = true;
-                }
-                else if (event.getCode() == KeyCode.A || event.getCode() == KeyCode.LEFT) {
+                } else if (event.getCode() == KeyCode.A || event.getCode() == KeyCode.LEFT) {
                     isLeftKeyPressed = true;
 
-                }
-                else if (event.getCode() == KeyCode.D || event.getCode() == KeyCode.RIGHT) {
+                } else if (event.getCode() == KeyCode.D || event.getCode() == KeyCode.RIGHT) {
                     isRightKeyPressed = true;
-                }
-                else if (event.getCode() == KeyCode.S || event.getCode() == KeyCode.DOWN){
+                } else if (event.getCode() == KeyCode.S || event.getCode() == KeyCode.DOWN) {
                     isDownkeyPressed = true;
-                }
-                else if (event.getCode() == KeyCode.SPACE){
+                } else if (event.getCode() == KeyCode.SPACE) {
                     shoot.start();
                     isSpaseKeyPressed = true;
-                }
-                else if(event.getCode() == KeyCode.TAB){
+                } else if (event.getCode() == KeyCode.TAB) {
                     BulletIcon.getInstance().switchIcon();
-                }
-                else if(event.getCode() == KeyCode.R){
-                    if(RocketTimer.getInstance().getWidth() == 100 && !Avatar.getInstance().isRocket()) {
+                } else if (event.getCode() == KeyCode.R) {
+                    if (RocketTimer.getInstance().getWidth() == 100 && !Avatar.getInstance().isRocket()) {
                         Avatar.getInstance().setRocket(true);
                         RocketAnimation animation = new RocketAnimation(gamePane);
                         animation.play();
@@ -123,54 +144,55 @@ public class Game {
 
             @Override
             public void handle(KeyEvent event) {
-                if(event.getCode() == KeyCode.W || event.getCode() == KeyCode.UP){
+                if (event.getCode() == KeyCode.W || event.getCode() == KeyCode.UP) {
                     isUpKeyPressed = false;
-                }
-                else if (event.getCode() == KeyCode.A || event.getCode() == KeyCode.LEFT) {
+                } else if (event.getCode() == KeyCode.A || event.getCode() == KeyCode.LEFT) {
                     isLeftKeyPressed = false;
 
-                }
-                else if (event.getCode() == KeyCode.D || event.getCode() == KeyCode.RIGHT) {
+                } else if (event.getCode() == KeyCode.D || event.getCode() == KeyCode.RIGHT) {
                     isRightKeyPressed = false;
-                }
-                else if (event.getCode() == KeyCode.S || event.getCode() == KeyCode.DOWN){
+                } else if (event.getCode() == KeyCode.S || event.getCode() == KeyCode.DOWN) {
                     isDownkeyPressed = false;
-                }
-                else if (event.getCode() == KeyCode.SPACE){
+                } else if (event.getCode() == KeyCode.SPACE) {
                     isSpaseKeyPressed = false;
                 }
             }
         });
     }
 
-    private void createMedia(){
+    private void createMedia() {
         Media backgroundSound = new Media(getClass().getResource(Sounds.GAME.getUrl()).toExternalForm());
         backgroundSoundPlayer = new MediaPlayer(backgroundSound);
         backgroundSoundPlayer.setCycleCount(INDEFINITE);
-
-//        Media bulletSound = new Media(getClass().getResource(Sounds.SHOOT.getUrl()).toExternalForm());
-//        bulletSoundPlayer = new MediaPlayer(bulletSound);
     }
 
     public void createGame(Stage mainStage) {
         this.mainStage = mainStage;
         this.mainStage.hide();
-//        createBackground();
+        createBackground();
         createAvatar();
         createGameElements();
         createGameLoop();
         gameStage.show();
-        if(!isMute)
+        if (!isMute)
             backgroundSoundPlayer.play();
     }
 
-    private void createGameElements(){
+    private void createBackground() {
+        BackgroundImage backgroundImage = new BackgroundImage(new Image(getClass().getResource
+                (Images.BACKGROUND.getUrl()).toExternalForm()),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        gamePane.setBackground(new Background(backgroundImage));
+    }
+
+    private void createGameElements() {
         gamePane.getChildren().add(BulletIcon.getInstance());
 
         Rectangle timerFrame = new Rectangle(397, 7, 106, 26);
         gamePane.getChildren().add(timerFrame);
         gamePane.getChildren().add(RocketTimer.getInstance());
-        Text rocketText = new Text(420, 22,"rocket time!");
+        Text rocketText = new Text(420, 22, "rocket time!");
         gamePane.getChildren().add(rocketText);
 
         gamePane.getChildren().add(BossEgg.getInstance());
@@ -190,7 +212,7 @@ public class Game {
         score = new Text(120, 22, "score: " + String.valueOf(Avatar.getInstance().getScore()));
         gamePane.getChildren().add(score);
 
-        timer = new Text(200,22," ");
+        timer = new Text(200, 22, " ");
         gamePane.getChildren().add(timer);
 
         PeriodicTask miniBossLoop = new PeriodicTask(15) {
@@ -210,28 +232,19 @@ public class Game {
         PeriodicTask rocketTime = new PeriodicTask(3) {
             @Override
             public void run() {
-                if(RocketTimer.getInstance().getWidth() < 100)
+                if (RocketTimer.getInstance().getWidth() < 100)
                     RocketTimer.getInstance().setWidth(RocketTimer.getInstance().getWidth() + 20);
             }
         };
         rocketTime.start();
 
-//        PeriodicTask bossShoot = new PeriodicTask(10) {
-//            @Override
-//            public void run() {
-//                BossShoot bossShoot1 = new BossShoot();
-//                bossShoot1.play();
-//            }
-//        };
-//        bossShoot.start();
-
         shoot = new PeriodicTask(0.5) {
             @Override
             public void run() {
-                if(isSpaseKeyPressed){
+                if (isSpaseKeyPressed) {
                     Bullet bullet;
-                    if(BulletIcon.isBullet()) {
-                        if(!isMute) {
+                    if (BulletIcon.isBullet()) {
+                        if (!isMute) {
                             Media bulletSound = new Media(getClass().getResource(Sounds.SHOOT.getUrl()).toExternalForm());
                             MediaPlayer bulletSoundPlayer = new MediaPlayer(bulletSound);
                             bulletSoundPlayer.play();
@@ -239,24 +252,19 @@ public class Game {
 
                         bullet = new Bullet(avatar.getX() + avatar.getWidth() / 2,
                                 avatar.getY() + avatar.getHeight() / 2, 72, 15);
-                    }
-                    else {
+                    } else {
                         bullet = new Bullet(avatar.getX() + avatar.getWidth() / 2,
                                 avatar.getY() + avatar.getHeight() / 2, 36, 55);
                     }
                     gamePane.getChildren().add(bullet);
                     BulletAnimation animation = new BulletAnimation(Bullet.getBullets(), bullet, gamePane);
                     animation.play();
-//                    System.out.println("********************************************************");
-//                    for (Bullet b:Bullet.getBullets()) {
-//                        System.out.println(b);
-//                    }
                 }
             }
         };
     }
 
-    private void createAvatar(){
+    private void createAvatar() {
         avatar = Avatar.getInstance();
         gamePane.getChildren().add(Avatar.getInstance());
     }
@@ -266,12 +274,17 @@ public class Game {
         gameTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-
                 timer(start);
 
-                if(!Avatar.getInstance().isRocket() && Avatar.getInstance().hasCollision(Boss.getInstance())){
+                if (!Avatar.getInstance().isRocket() && Avatar.getInstance().hasCollision(Boss.getInstance())) {
                     Avatar.getInstance().setLife(Avatar.getInstance().getLife()
                             - 1 * Avatar.getInstance().getVulnerability());
+                }
+
+                if (Avatar.getInstance().getLife() <= 0 ||
+                        (Boss.getInstance().isPhase3() &&
+                                Boss.getInstance().getLife() <= 0)) {
+                    stopGame();
                 }
 
                 moveAvatar();
@@ -280,69 +293,41 @@ public class Game {
         gameTimer.start();
     }
 
-    private void timer(LocalDateTime start){
+    private void timer(LocalDateTime start) {
         LocalDateTime then = LocalDateTime.now();
-        LocalDateTime tempDateTime = LocalDateTime.from( start );
-        long minutes = tempDateTime.until( then, ChronoUnit.MINUTES );
-        tempDateTime = tempDateTime.plusMinutes( minutes );
-        long seconds = tempDateTime.until( then, ChronoUnit.SECONDS );
-        timer.setText( minutes + ":" + seconds);
+        LocalDateTime tempDateTime = LocalDateTime.from(start);
+        long minutes = tempDateTime.until(then, ChronoUnit.MINUTES);
+        tempDateTime = tempDateTime.plusMinutes(minutes);
+        long seconds = tempDateTime.until(then, ChronoUnit.SECONDS);
+        timer.setText(minutes + ":" + seconds);
     }
 
     private void moveAvatar() {
 
-        if(isDownkeyPressed) {
-            if(avatar.getY() < GAME_HEIGHT - avatar.getHeight())
-                avatar.setY(avatar.getY() + 10);
+        if (isDownkeyPressed) {
+            Avatar.getInstance().moveDown();
         }
 
-        if(isUpKeyPressed){
-            if(avatar.getY() > 0){
-                avatar.setY(avatar.getY() - 10);
-            }
+        if (isUpKeyPressed) {
+            Avatar.getInstance().moveUp();
         }
 
-        if(isRightKeyPressed){
-            if(avatar.getX() < GAME_WIDTH - avatar.getWidth()) {
-                avatar.setX(avatar.getX() + 10);
-            }
+        if (isRightKeyPressed) {
+            Avatar.getInstance().moveRight();
         }
 
-        if(isLeftKeyPressed){
-            if(avatar.getX() > 0){
-                avatar.setX(avatar.getX() - 10);
-            }
+        if (isLeftKeyPressed) {
+            Avatar.getInstance().moveLeft();
         }
 
-        if(!isSpaseKeyPressed){
+        if (!isSpaseKeyPressed) {
             shoot.stop();
         }
 
     }
-    public static int getGameHeight(){
-        return GAME_HEIGHT;
-    }
-    public static int getGameWidth(){
-        return GAME_WIDTH;
+
+    private void stopGame() {
+        gameStage.close();
     }
 
-    public Text getBossLife() {
-        return bossLife;
-    }
-
-    public Text getAvatarLife() {
-        return avatarLife;
-    }
-
-    public Text getScore() {
-        return score;
-    }
-
-    public void setIsMute(boolean isMute){
-        this.isMute = isMute;
-    }
-
-    public static AnchorPane getGamePane() {
-        return gamePane;
-    }
 }
