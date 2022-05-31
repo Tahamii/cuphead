@@ -11,14 +11,14 @@
             xmlns="http://javafx.com/javafx/16"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="cupheadProject.View.FirstPageController"
-            stylesheets="@../css/style.css" >
+            stylesheets="@../css/style.css">
 
     <center>
 
         <VBox spacing="10" alignment="CENTER" maxWidth="350">
-            <Text id="title" text="Cup Head" />
+            <Text id="title" text="Cup Head"/>
             <Label text="Username"/>
-            <TextField fx:id="username" promptText="enter your username" />
+            <TextField fx:id="username" promptText="enter your username"/>
             <Label text="Password"/>
             <TextField fx:id="password" promptText="enter your password" onKeyTyped="#typePassword"/>
             <Button fx:id="loginButton" styleClass="primary-btn" text="Login" onMouseClicked="#login"/>

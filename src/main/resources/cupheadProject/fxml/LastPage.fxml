@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Text?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="cupheadProject.View.Menu"
+            prefHeight="400.0" prefWidth="600.0"
+            stylesheets="@../css/style.css">
+    <center>
+
+        <VBox spacing="30" alignment="CENTER" maxWidth="350">
+            <Text id="title" text="have a good day"/>
+            <Text text="there is no success without failure and no winning without losing "/>
+        </VBox>
+
+    </center>
+
+</BorderPane>

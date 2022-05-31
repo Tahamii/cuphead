@@ -1,5 +1,6 @@
 package cupheadProject.View;
 
+import cupheadProject.App;
 import cupheadProject.Enums.AvatarAddress;
 import cupheadProject.Enums.Images;
 import cupheadProject.Enums.Sounds;
@@ -8,6 +9,7 @@ import cupheadProject.View.Components.*;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -327,6 +329,18 @@ public class Game {
     }
 
     private void stopGame() {
+        gameTimer.stop();
+        shoot.stop();
+        backgroundSoundPlayer.stop();
+
+        Menu.playMenuSound();
+        try {
+            App.setRoot("LastPage");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        App.getMainStage().show();
         gameStage.close();
     }
 
