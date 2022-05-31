@@ -16,7 +16,7 @@ public class BoomAnimation extends Transition {
     private Boom image;
 
     public BoomAnimation(AnchorPane pane, Boom image){
-        pane.getChildren().add(image);
+//        pane.getChildren().add(image);
         this.image = image;
         this.pane = pane;
         this.setCycleDuration(Duration.millis(1000));

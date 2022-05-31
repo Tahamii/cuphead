@@ -30,4 +30,12 @@ public class Bullet extends Rectangle {
     public static void remove(Bullet bullet) {
         bullets.remove(bullet);
     }
+
+    public static boolean hasCollision(Rectangle boss, int i){
+        if(boss.getBoundsInParent().intersects(bullets.get(i).getLayoutBounds())){
+//                System.out.println(block);
+            return true;
+        }
+        return false;
+    }
 }

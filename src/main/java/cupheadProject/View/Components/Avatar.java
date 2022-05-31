@@ -1,6 +1,9 @@
 package cupheadProject.View.Components;
 
+import cupheadProject.Transition.BlinkAvatar;
+import cupheadProject.View.Game;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -10,6 +13,10 @@ import java.util.ArrayList;
 public class Avatar extends Rectangle {
     private static Avatar instance;
     private boolean isRocket;
+    private double score = 0;
+    private double life = 5;
+    private double Injury = 1;
+    private double Vulnerability = 1;
 
     public static Avatar getInstance() {
         if (instance == null)
@@ -37,6 +44,53 @@ public class Avatar extends Rectangle {
         isRocket = rocket;
     }
 
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+        if(Game.getInstance().getScore() != null)
+            Game.getInstance().getScore().setText(String.valueOf(this.score));
+    }
+
+    public double getLife() {
+        return life;
+    }
+
+    public void setLife(double life) {
+        this.life = life;
+        if(Game.getInstance().getAvatarLife() == null) {
+            return;
+        }
+        if(Avatar.getInstance().getLife() <= 1){
+            Game.getInstance().getAvatarLife().setFill(Color.RED);
+        }
+        Game.getInstance().getAvatarLife().setText(String.valueOf("life: " + this.life));
+        Boom blink = new Boom(this.getX(), this.getY());
+        Game.getGamePane().getChildren().add(blink);
+        BlinkAvatar blinkAvatar = new BlinkAvatar(this.getX(), this.getY(), blink);
+        blinkAvatar.play();
+        this.setX(-250);
+        this.setY(-250);
+    }
+
+    public double getInjury() {
+        return Injury;
+    }
+
+    public void setInjury(double injury) {
+        Injury = injury;
+    }
+
+    public double getVulnerability() {
+        return Vulnerability;
+    }
+
+    public void setVulnerability(double vulnerability) {
+        Vulnerability = vulnerability;
+    }
+
     public Rectangle hasCollision(ArrayList<MiniBosses> blocks){
         for (Rectangle block : blocks) {
             if(block.getBoundsInParent().intersects(this.getLayoutBounds())){
@@ -45,6 +99,13 @@ public class Avatar extends Rectangle {
             }
         }
         return null;
+    }
+
+    public boolean hasCollision(Rectangle block){
+        if(block.getBoundsInParent().intersects(this.getLayoutBounds())){
+            return true;
+        }
+        return false;
     }
 
     public void moveRight() {

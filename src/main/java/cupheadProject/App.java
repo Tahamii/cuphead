@@ -46,8 +46,9 @@ public class App extends Application {
 
     public static void setMainStage(Stage mainStage) {
 //        App.mainStage.hide();
-        Game gamePageController = new Game();
-        gamePageController.createGame(App.mainStage);
+//        Game gamePageController = new Game();
+//        gamePageController.createGame(App.mainStage);
+        Game.getInstance().createGame(App.mainStage);
     }
 
     public static void setScene(Scene scene) {

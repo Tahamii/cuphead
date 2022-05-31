@@ -1,7 +1,6 @@
 package cupheadProject.Transition;
 
-import cupheadProject.View.Components.Bullet;
-import cupheadProject.View.Components.BulletIcon;
+import cupheadProject.View.Components.*;
 import cupheadProject.View.Game;
 import javafx.animation.Transition;
 import javafx.scene.layout.AnchorPane;
@@ -29,9 +28,13 @@ public class BulletAnimation extends Transition {
         if (BulletIcon.getInstance().isBullet()) {
             for (int i = 0; i < bullets.size(); i++) {
                 bullets.get(i).setX(bullets.get(i).getX() + 10);
-                if (bullets.get(i).getX() > gameWidth) {
-                    pane.getChildren().remove(bullets.get(i));
-                    bullet.remove(bullets.get(i));
+                if(Bullet.hasCollision(Boss.getInstance(), i)){
+                    Boss.getInstance().setLife(Boss.getInstance().getLife() - 1 * Avatar.getInstance().getInjury());
+                    Avatar.getInstance().setScore(Avatar.getInstance().getScore() + 1);
+                    exit(i);
+                }
+                else if (bullets.get(i).getX() > gameWidth) {
+                    exit(i);
                 }
             }
             if (bullets.size() == 0) {
@@ -41,14 +44,23 @@ public class BulletAnimation extends Transition {
         else{
             for (int i = 0; i < bullets.size(); i++) {
                 bullets.get(i).setY(bullets.get(i).getY() + 10);
-                if (bullets.get(i).getY() > gameHeight) {
-                    pane.getChildren().remove(bullets.get(i));
-                    bullet.remove(bullets.get(i));
+                if(Bullet.hasCollision(Boss.getInstance(), i)){
+                    Boss.getInstance().setLife(Boss.getInstance().getLife() - 2 * Avatar.getInstance().getInjury());
+                    Avatar.getInstance().setScore(Avatar.getInstance().getScore() + 2);
+                    exit(i);
+                }
+                else if (bullets.get(i).getY() > gameHeight) {
+                    exit(i);
                 }
             }
             if (bullets.size() == 0) {
                 this.stop();
             }
         }
+    }
+
+    private void exit(int i){
+        pane.getChildren().remove(bullets.get(i));
+        bullet.remove(bullets.get(i));
     }
 }

@@ -3,9 +3,7 @@ package cupheadProject.View;
 import cupheadProject.Enums.AvatarAddress;
 import cupheadProject.Enums.Images;
 import cupheadProject.Enums.Sounds;
-import cupheadProject.Transition.BulletAnimation;
-import cupheadProject.Transition.MiniBossAnimation;
-import cupheadProject.Transition.RocketAnimation;
+import cupheadProject.Transition.*;
 import cupheadProject.View.Components.*;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
@@ -19,18 +17,23 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Random;
 
 import static javafx.scene.media.MediaPlayer.INDEFINITE;
 
 public class Game {
+    private static Game instance;
 
-    private AnchorPane gamePane;
+    private static AnchorPane gamePane;
     private Scene gameScene;
     private Stage gameStage;
     private Stage mainStage;
@@ -44,17 +47,29 @@ public class Game {
     MediaPlayer backgroundSoundPlayer;
     MediaPlayer bulletSoundPlayer;
 
+    private Text bossLife;
+    private Text avatarLife;
+    private Text score;
+    private Text timer;
+
     private boolean isUpKeyPressed;
     private boolean isLeftKeyPressed;
     private boolean isRightKeyPressed;
     private boolean isDownkeyPressed;
     private boolean isSpaseKeyPressed;
 
+    private boolean isMute = false;
 
     private static final int GAME_WIDTH = 900;
-    private static final int GAME_HEIGHT = 500;
+    private static final int GAME_HEIGHT = 800;
 
-    public Game() {
+    public static Game getInstance() {
+        if (instance == null)
+            instance = new Game();
+        return instance;
+    }
+
+    private Game() {
         initializeStage();
         createKeyListeners();
         createMedia();
@@ -145,30 +160,38 @@ public class Game {
         createGameElements();
         createGameLoop();
         gameStage.show();
-        backgroundSoundPlayer.play();
+        if(!isMute)
+            backgroundSoundPlayer.play();
     }
 
     private void createGameElements(){
         gamePane.getChildren().add(BulletIcon.getInstance());
+
         Rectangle timerFrame = new Rectangle(397, 7, 106, 26);
         gamePane.getChildren().add(timerFrame);
         gamePane.getChildren().add(RocketTimer.getInstance());
-//        Text rocketText = new Text("rocket timer");
-//        rocketText.setLayoutX(420);
-//        rocketText.setY(12);
-//        gamePane.getChildren().add(rocketText);
+        Text rocketText = new Text(420, 22,"rocket time!");
+        gamePane.getChildren().add(rocketText);
 
+        gamePane.getChildren().add(BossEgg.getInstance());
+        gamePane.getChildren().add(Boss.getInstance());
+        BossAnimation bossFly = new BossAnimation();
+        bossFly.play();
 
-//        Button b = new GameButton("test");
-//        b.setLayoutX(50);
-//        b.setLayoutY(50);
-//        gamePane.getChildren().add(b);
-//        miniBosses = new ImageView[3];
-//        for (int i = 0; i < miniBosses.length; i++) {
-//            miniBosses[i] = new ImageView(new Image(getClass().getResource(Images.MINIBOSS.getUrl()).toExternalForm()));
-//            miniBosses[i].setLayoutY(100);
-//            gamePane.getChildren().add(miniBosses[i]);
-//        }
+        Rectangle bossLifeFrame = new Rectangle(597, 7, 106, 26);
+        gamePane.getChildren().add(bossLifeFrame);
+        gamePane.getChildren().add(BossLife.getInstance());
+        bossLife = new Text(605, 22, String.valueOf(BossLife.getInstance().getNumber()));
+        gamePane.getChildren().add(bossLife);
+
+        avatarLife = new Text(60, 22, "life: " + String.valueOf(Avatar.getInstance().getLife()));
+        gamePane.getChildren().add(avatarLife);
+
+        score = new Text(120, 22, "score: " + String.valueOf(Avatar.getInstance().getScore()));
+        gamePane.getChildren().add(score);
+
+        timer = new Text(200,22," ");
+        gamePane.getChildren().add(timer);
 
         PeriodicTask miniBossLoop = new PeriodicTask(15) {
             @Override
@@ -184,14 +207,23 @@ public class Game {
         };
         miniBossLoop.start();
 
-        PeriodicTask RocketTime = new PeriodicTask(3) {
+        PeriodicTask rocketTime = new PeriodicTask(3) {
             @Override
             public void run() {
                 if(RocketTimer.getInstance().getWidth() < 100)
                     RocketTimer.getInstance().setWidth(RocketTimer.getInstance().getWidth() + 20);
             }
         };
-        RocketTime.start();
+        rocketTime.start();
+
+//        PeriodicTask bossShoot = new PeriodicTask(10) {
+//            @Override
+//            public void run() {
+//                BossShoot bossShoot1 = new BossShoot();
+//                bossShoot1.play();
+//            }
+//        };
+//        bossShoot.start();
 
         shoot = new PeriodicTask(0.5) {
             @Override
@@ -199,9 +231,11 @@ public class Game {
                 if(isSpaseKeyPressed){
                     Bullet bullet;
                     if(BulletIcon.isBullet()) {
-                        Media bulletSound = new Media(getClass().getResource(Sounds.SHOOT.getUrl()).toExternalForm());
-                        MediaPlayer bulletSoundPlayer = new MediaPlayer(bulletSound);
-                        bulletSoundPlayer.play();
+                        if(!isMute) {
+                            Media bulletSound = new Media(getClass().getResource(Sounds.SHOOT.getUrl()).toExternalForm());
+                            MediaPlayer bulletSoundPlayer = new MediaPlayer(bulletSound);
+                            bulletSoundPlayer.play();
+                        }
 
                         bullet = new Bullet(avatar.getX() + avatar.getWidth() / 2,
                                 avatar.getY() + avatar.getHeight() / 2, 72, 15);
@@ -228,17 +262,31 @@ public class Game {
     }
 
     private void createGameLoop() {
+        LocalDateTime start = LocalDateTime.now();
         gameTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-//                moveBackground();
-//                checkIfElementAreBehindTheShipAndRelocated();
-//                checkIfElementsCollide();
+
+                timer(start);
+
+                if(!Avatar.getInstance().isRocket() && Avatar.getInstance().hasCollision(Boss.getInstance())){
+                    Avatar.getInstance().setLife(Avatar.getInstance().getLife()
+                            - 1 * Avatar.getInstance().getVulnerability());
+                }
 
                 moveAvatar();
             }
         };
         gameTimer.start();
+    }
+
+    private void timer(LocalDateTime start){
+        LocalDateTime then = LocalDateTime.now();
+        LocalDateTime tempDateTime = LocalDateTime.from( start );
+        long minutes = tempDateTime.until( then, ChronoUnit.MINUTES );
+        tempDateTime = tempDateTime.plusMinutes( minutes );
+        long seconds = tempDateTime.until( then, ChronoUnit.SECONDS );
+        timer.setText( minutes + ":" + seconds);
     }
 
     private void moveAvatar() {
@@ -278,7 +326,23 @@ public class Game {
         return GAME_WIDTH;
     }
 
-    public AnchorPane getGamePane() {
+    public Text getBossLife() {
+        return bossLife;
+    }
+
+    public Text getAvatarLife() {
+        return avatarLife;
+    }
+
+    public Text getScore() {
+        return score;
+    }
+
+    public void setIsMute(boolean isMute){
+        this.isMute = isMute;
+    }
+
+    public static AnchorPane getGamePane() {
         return gamePane;
     }
 }

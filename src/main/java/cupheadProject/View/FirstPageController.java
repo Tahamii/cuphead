@@ -13,7 +13,6 @@ import javafx.stage.Stage;
 
 public class FirstPageController extends Menu {
 
-
     public Button loginButton;
     public Button registerButton;
     @FXML
@@ -38,7 +37,7 @@ public class FirstPageController extends Menu {
             showErrorMessage("username or password is wrong");
         }
         else{
-            this.switchToPage("ProfileMenu");
+            this.switchToPage("MainMenu");
         }
     }
 
@@ -59,8 +58,7 @@ public class FirstPageController extends Menu {
     }
 
     public void skip(MouseEvent mouseEvent) {
-        ChooseAvatar chooseAvatar = new ChooseAvatar();
-        App.setScene(chooseAvatar.getAvatarScene());
+        this.switchToPage("MainMenu");
     }
 
 

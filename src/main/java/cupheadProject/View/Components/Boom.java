@@ -5,17 +5,17 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 public class Boom extends Rectangle {
-    private static Boom instance = null;
+//    private static Boom instance = null;
+//
+//    public static Boom getInstance(double x, double y) {
+//        if (instance == null)
+//            instance = new Boom(x,y);
+//        instance.setY(y);
+//        instance.setX(x);
+//        return instance;
+//    }
 
-    public static Boom getInstance(double x, double y) {
-        if (instance == null)
-            instance = new Boom(x,y);
-        instance.setY(y);
-        instance.setX(x);
-        return instance;
-    }
-
-    private Boom(double x, double y) {
+    public Boom(double x, double y) {
         super(x, y, 100, 100);
         this.setBackground("/cupheadProject/png/boom/0.png");
     }

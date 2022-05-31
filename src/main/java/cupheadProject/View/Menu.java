@@ -22,6 +22,10 @@ public class Menu {
         menuSound.stop();
     }
 
+    public static MediaPlayer getMenuSound(){
+        return menuSound;
+    }
+
     public void switchToPage(String pageName) {
         try {
             App.setRoot(pageName);

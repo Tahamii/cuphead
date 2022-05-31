@@ -9,7 +9,8 @@ public enum Images {
     BULLET("/cupheadProject/png/bullet.png"),
     BOMB("/cupheadProject/png/bomb.png"),
     BULLETICON("/cupheadProject/png/bullet_icon.png"),
-    BOMBICON("/cupheadProject/png/bomb_icon.png");
+    BOMBICON("/cupheadProject/png/bomb_icon.png"),
+    EGG("/cupheadProject/png/egg.png");
 
     private String url;
 

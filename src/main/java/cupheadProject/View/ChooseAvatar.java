@@ -143,7 +143,8 @@ public class ChooseAvatar {
     private void startGame() {
         System.out.println("started");
         Menu.stopMenuSound();
-        Game gameManager = new Game();
+//        Game gameManager = new Game();
+        Game.getInstance();
         Stage stage = new Stage();
         App.setMainStage(stage);
     }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Text?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="cupheadProject.View.SettingController"
+            prefHeight="400.0" prefWidth="600.0"
+            stylesheets="@../css/style.css">
+    <center>
+
+        <VBox spacing="10" alignment="CENTER" maxWidth="350">
+            <Text id="title" text="setting" />
+            <Button text="easy" styleClass="secondary-btn" onMouseClicked="#levelOne"/>
+            <Button text="normal" styleClass="secondary-btn" onMouseClicked="#levelTwo"/>
+            <Button text="hard" styleClass="secondary-btn" onMouseClicked="#levelThree"/>
+            <Button text="devil mode" styleClass="secondary-btn" onMouseClicked="#levelThree"/>
+            <Button fx:id="mute" text="mute" styleClass="secondary-btn" onMouseClicked="#mute"/>
+            <Button text="black and white" styleClass="secondary-btn" onMouseClicked="#noColor"/>
+            <Button text="return to main menu"  onMouseClicked="#mainMenu"/>
+        </VBox>
+
+    </center>
+
+</BorderPane>
